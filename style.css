@@ -845,3 +845,44 @@ section {
   font-size: 14px;
   color: #444;
 }
+
+/* ========== Testimonials Buttons ========== */
+.testimonials .btn {
+  display: inline-block;
+  margin: 8px 5px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #5a67d8; /* ungu biru */
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.testimonials .btn:hover {
+  background: #434190; /* lebih gelap saat hover */
+}
+
+.add-testimonial-btn i,
+.show-all-btn i,
+.show-less-btn i {
+  margin-right: 6px;
+}
+
+.show-all-btn {
+  background: #38b2ac; /* hijau tosca */
+}
+
+.show-all-btn:hover {
+  background: #2c7a7b;
+}
+
+.show-less-btn {
+  background: #ed8936; /* oranye */
+}
+
+.show-less-btn:hover {
+  background: #c05621;
+}
+
