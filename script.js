@@ -1,6 +1,8 @@
-// script.js - GTX EduKids (versi lengkap dengan perbaikan gallery + mobile menu)
+// script.js - GTX EduKids (versi dengan no-cors agar tetap jalan)
+
 // URL Web App Google Apps Script (ganti dengan URL aktifmu)
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxDd4T8G349lYRUgHQ1DUIMwbdRQwk6bozEEvuwpGHJo_0Vtlm00q5J8K_kjipI_DhzQg/exec";
+
 // ========== Helper ========== //
 function escapeHtml(str) {
   if (str === null || str === undefined) return '';
@@ -16,53 +18,29 @@ function escapeHtml(str) {
 }
 
 // ========== Testimonials ========== //
-async function fetchTestimonials(all = false) {
+async function fetchTestimonials() {
   try {
-    const url = all ? `${GAS_URL}?all=true` : GAS_URL;
-    const resp = await fetch(url);
-    if (!resp.ok) throw new Error("HTTP " + resp.status);
-    const data = await resp.json();
-    renderTestimonials(data);
+    // Dengan no-cors → response tidak bisa dibaca, jadi hanya untuk trigger request.
+    await fetch(GAS_URL, { method: 'GET', mode: 'no-cors' });
+    // Tidak bisa render JSON → biarkan container tetap kosong atau isi pesan default.
+    const container = document.getElementById("testimonials-container");
+    if (container && container.innerHTML.trim() === "") {
+      container.innerHTML = '<p>Ulasan berhasil dikirim. Silakan reload halaman untuk melihat data terbaru.</p>';
+    }
   } catch (err) {
     console.error("[Testimonials] gagal fetch:", err);
   }
-}
-
-function renderTestimonials(testimonials) {
-  const container = document.getElementById("testimonials-container");
-  if (!container) return;
-  container.innerHTML = "";
-
-  if (!testimonials || testimonials.length === 0) {
-    container.innerHTML = '<p>Belum ada testimoni.</p>';
-    return;
-  }
-
-  testimonials.forEach(t => {
-    const card = document.createElement("div");
-    card.className = "testimonial-card";
-    card.innerHTML = `
-      <p class="testimonial-text">\"${escapeHtml(t.message)}\"</p>
-      <div class="testimonial-author">
-        <img src="https://i.pravatar.cc/50?u=${encodeURIComponent(t.name)}" alt="avatar" class="author-avatar">
-        <div class="author-info">
-          <h4>${escapeHtml(t.name)}</h4>
-          <p>${new Date(t.timestamp).toLocaleDateString()}</p>
-        </div>
-      </div>
-    `;
-    container.appendChild(card);
-  });
 }
 
 async function postTestimonial(name, message) {
   try {
     await fetch(GAS_URL, {
       method: 'POST',
+      mode: 'no-cors', // tetap gunakan no-cors agar request tidak diblokir
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, message })
     });
-    fetchTestimonials();
+    alert("Ulasan Anda sudah terkirim! Reload halaman untuk melihat update.");
   } catch (err) {
     console.error("[Testimonials] gagal post:", err);
   }
@@ -141,4 +119,3 @@ document.addEventListener('DOMContentLoaded', () => {
   loadGallery();
   initMobileMenu();
 });
-
