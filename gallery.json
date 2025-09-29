@@ -1,0 +1,29 @@
+{
+    "gallery": [
+        {
+            "id": 1,
+            "image": "https://picsum.photos/seed/gallery1/400/300.jpg",
+            "caption": "Kegiatan belajar di kelas"
+        },
+        {
+            "id": 2,
+            "image": "https://picsum.photos/seed/gallery2/400/300.jpg",
+            "caption": "Interaksi guru dan siswa"
+        },
+        {
+            "id": 3,
+            "image": "https://picsum.photos/seed/gallery3/400/300.jpg",
+            "caption": "Proyek kreatif siswa"
+        },
+        {
+            "id": 4,
+            "image": "https://picsum.photos/seed/gallery4/400/300.jpg",
+            "caption": "Kelas outdoor"
+        },
+        {
+            "id": 5,
+            "image": "https://picsum.photos/seed/gallery5/400/300.jpg",
+            "caption": "Presentasi hasil belajar"
+        }
+    ]
+}
