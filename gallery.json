@@ -2,27 +2,32 @@
   "gallery": [
     {
       "id": 1,
-      "image": "images/hasil-belajar/piagam1.webp",
+      "imageWebp": "images/hasil-belajar/piagam1.webp",
+      "imageFallback": "images/hasil-belajar/piagam1.jpg",
       "caption": "Hasil Belajar - Piagam"
     },
     {
       "id": 2,
-      "image": "images/interaksi/interaksi1.webp",
+      "imageWebp": "images/interaksi/interaksi1.webp",
+      "imageFallback": "images/interaksi/interaksi1.jpg",
       "caption": "Interaksi Anak-anak"
     },
     {
       "id": 3,
-      "image": "images/kegiatan-belajar/kegiatan1.webp",
+      "imageWebp": "images/kegiatan-belajar/kegiatan1.webp",
+      "imageFallback": "images/kegiatan-belajar/kegiatan1.jpg",
       "caption": "Kegiatan Belajar"
     },
     {
       "id": 4,
-      "image": "images/kreatif/kreatif1.webp",
+      "imageWebp": "images/kreatif/kreatif1.webp",
+      "imageFallback": "images/kreatif/kreatif1.jpg",
       "caption": "Aktivitas Kreatif"
     },
     {
       "id": 5,
-      "image": "images/outdoor/outdoor1.webp",
+      "imageWebp": "images/outdoor/outdoor1.webp",
+      "imageFallback": "images/outdoor/outdoor1.jpg",
       "caption": "Kegiatan Outdoor"
     }
   ]
