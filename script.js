@@ -1,159 +1,129 @@
-// === KONFIGURASI ===
-const GAS_URL = "PASTE_URL_WEBAPP_ANDA_DI_SINI"; // ganti dengan Web App URL Google Apps Script
+// URL Apps Script
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxDd4T8G349lYRUgHQ1DUIMwbdRQwk6bozEEvuwpGHJo_0Vtlm00q5J8K_kjipI_DhzQg/exec';
 
-// === Fungsi umum ===
-function escapeHtml(text) {
-  const div = document.createElement("div");
-  div.innerText = text;
-  return div.innerHTML;
+// Escape HTML untuk keamanan
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
-// === TESTIMONI ===
-function renderTestimonials(testimonials) {
-  const container = document.querySelector(".testimonials-slider");
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  if (testimonials.length === 0) {
-    container.innerHTML = "<p>Belum ada testimoni.</p>";
+// Render testimonial ke DOM
+function renderTestimonials(list) {
+  const container = document.querySelector('.testimonials-slider');
+  if (!container) {
+    console.warn("⚠️ .testimonials-slider tidak ditemukan di DOM");
     return;
   }
 
-  testimonials.forEach(t => {
-    const card = document.createElement("div");
-    card.className = "testimonial-card";
+  console.log(`🎨 Render ${list.length} testimonial ke DOM`);
+  container.innerHTML = '';
+
+  if (!list || !list.length) {
+    container.innerHTML = '<p>Belum ada ulasan publik.</p>';
+    return;
+  }
+
+  list.forEach((t, i) => {
+    console.log(`➡️ [${i + 1}] ${t.name}: ${t.message}`);
+
+    const card = document.createElement('div');
+    card.className = 'testimonial-card';
     card.innerHTML = `
-      <p>"${escapeHtml(t.message)}"</p>
-      <h4>- ${escapeHtml(t.name)}</h4>
+      <p class="testimonial-text">"${escapeHtml(t.message)}"</p>
+      <div class="testimonial-author">
+        <img src="https://picsum.photos/seed/${encodeURIComponent(t.name)}/60/60.jpg" 
+             alt="${escapeHtml(t.name)}" 
+             class="author-avatar">
+        <div class="author-info">
+          <h4>${escapeHtml(t.name)}</h4>
+          <small>${new Date(t.timestamp).toLocaleString()}</small>
+        </div>
+      </div>
     `;
     container.appendChild(card);
   });
 }
 
+// Ambil testimonial (default 5 terbaru, semua kalau all=true)
 async function fetchTestimonials(showAll = false) {
+  console.log("📡 Fetching testimonials dari Google Sheets...");
   try {
     const url = showAll ? `${GAS_URL}?all=true` : GAS_URL;
     const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    console.log("✅ Data testimonial:", data);
+    console.log("✅ Data berhasil diambil:", data);
     renderTestimonials(data);
   } catch (err) {
-    console.error("❌ Gagal ambil testimonial:", err);
+    console.error("❌ Gagal fetch testimonials:", err);
   }
 }
 
+// Kirim testimonial baru
 async function postTestimonial(name, message) {
-  const data = {
-    type: "testimonial",
-    name: name,
-    message: message
-  };
-
-  console.log("📨 Kirim testimonial:", data);
-
+  console.log(`✍️ Mengirim testimonial baru (no-cors): ${name} - ${message}`);
   try {
     await fetch(GAS_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, message }),
+      mode: 'no-cors' // penting untuk bypass CORS
     });
 
-    alert("Testimoni berhasil dikirim!");
-    setTimeout(() => fetchTestimonials(), 2000);
-
+    alert('✅ Ulasan berhasil dikirim! Tunggu sebentar untuk muncul di daftar.');
+    setTimeout(() => fetchTestimonials(), 2000); // reload list
   } catch (err) {
-    console.error("❌ Gagal kirim testimonial:", err);
-    alert("Terjadi error saat mengirim testimoni.");
+    console.error("❌ Error postTestimonial (no-cors):", err);
+    alert('⚠️ Terjadi error saat mengirim ulasan.');
   }
 }
 
+// Prompt user untuk input testimonial
 function addNewTestimonial() {
-  const name = prompt("Masukkan nama Anda:") || "Anonim";
-  const message = prompt("Masukkan testimoni Anda:");
-  if (!message) {
-    alert("Pesan tidak boleh kosong!");
+  const name = prompt("Masukkan nama Anda:");
+  const comment = prompt("Masukkan ulasan Anda:");
+  if (!name || !comment) {
+    alert('Nama dan ulasan wajib diisi.');
     return;
   }
-  postTestimonial(name, message);
+  postTestimonial(name.trim(), comment.trim());
 }
 
-// === REGISTRASI ===
-async function submitRegistrationForm(event) {
-  event.preventDefault();
-  const form = event.target;
+// ========== Gallery ========== //
 
-  const formData = new FormData(form);
-  const data = {
-    type: "registration",
-    kelas: formData.get("kelas"),
-    program: formData.get("program"),
-    Waktu: formData.get("Waktu"),
-    parentName: formData.get("parentName"),
-    phone: formData.get("phone")
-  };
-
-  console.log("📨 Kirim registration payload:", data);
-
-  try {
-    await fetch(GAS_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-
-    alert("Pendaftaran berhasil dikirim!");
-    form.reset();
-
-  } catch (err) {
-    console.error("❌ Gagal kirim registrasi:", err);
-    alert("Terjadi error saat mengirim pendaftaran.");
-  }
-}
-
-// === GALERI ===
 async function loadGallery() {
   try {
-    const res = await fetch("gallery.json");
+    const res = await fetch('gallery.json');
     const data = await res.json();
-    const container = document.getElementById("gallery-grid");
+    const container = document.getElementById('gallery-grid');
     if (!container) return;
 
-    container.innerHTML = "";
-
-    if (!data.gallery || data.gallery.length === 0) {
-      container.innerHTML = "<p>Belum ada foto galeri.</p>";
+    container.innerHTML = '';
+    if (!data.gallery || !data.gallery.length) {
+      container.innerHTML = '<p>Belum ada foto galeri.</p>';
       return;
     }
 
     data.gallery.forEach(item => {
-      const div = document.createElement("div");
-      div.className = "gallery-item";
+      const div = document.createElement('div');
+      div.className = 'gallery-item';
       div.innerHTML = `
-        <img src="${item.url}" alt="Gallery">
-        <p>${escapeHtml(item.caption)}</p>
+        <img src="${item.url}" alt="${item.caption}">
+        <p class="caption">${item.caption}</p>
       `;
       container.appendChild(div);
     });
-
   } catch (err) {
-    console.error("❌ Gagal load gallery:", err);
+    console.error('Gagal memuat gallery:', err);
   }
 }
 
-// === INIT ===
-document.addEventListener("DOMContentLoaded", () => {
-  fetchTestimonials();
+// ========== Init on Page Load ========== //
+window.addEventListener('DOMContentLoaded', () => {
+  fetchTestimonials(); // default: 5 terbaru
   loadGallery();
-
-  const regForm = document.getElementById("registration-form");
-  if (regForm) {
-    regForm.addEventListener("submit", submitRegistrationForm);
-  }
 });
-
-// expose fungsi biar bisa dipanggil dari HTML
-window.addNewTestimonial = addNewTestimonial;
-window.fetchTestimonials = fetchTestimonials;
