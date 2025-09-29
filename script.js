@@ -1,5 +1,5 @@
 // URL Apps Script
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwidZHDzIVRF2uBQ5B2JbYUyr0VQSx83d_Ky37Am0nwQLlC47iJF6VUrTK0wp6h63ZD_w/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyWa85cpYDn-mMDGp2zSPWxpZHFTsZsy5WvJh3f-KmbhCbiDj1xE0-Z_Cz0kz9D_ui1yQ/exec';
 
 // Escape HTML untuk keamanan
 function escapeHtml(str) {
@@ -162,6 +162,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
 
 
 
