@@ -131,9 +131,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// =====================================
-// REGISTRATION (langsung ke WhatsApp)
-// =====================================
+// === Registration (via WhatsApp) ===
 const regForm = document.getElementById('registrationForm');
 if (regForm) {
   regForm.addEventListener('submit', e => {
@@ -146,18 +144,25 @@ if (regForm) {
     const parentName = document.getElementById('parentName').value.trim();
     const phone = document.getElementById('phone').value.trim();
 
+    // 🔍 Validasi sederhana
+    if (!nama || !kelas || !program || !waktu || !parentName || !phone) {
+      alert("⚠️ Semua field wajib diisi sebelum mendaftar.");
+      return;
+    }
+
     const pesan = 
-`Halo Admin GTX EduKids, saya ingin mendaftarkan anak saya:%0A
+`Halo Admin GTX EduKids, saya ingin mendaftarkan anak saya:%0A%0A
 👦 Nama Anak: ${nama}%0A
 🏫 Kelas: ${kelas}%0A
 📘 Program: ${program}%0A
-⏰ Waktu: ${waktu}%0A
+⏰ Waktu: ${waktu}:00 WIB%0A
 👩‍👦 Nama Orang Tua: ${parentName}%0A
 📱 No. WA: ${phone}`;
 
     const waUrl = `https://wa.me/6283895603395?text=${pesan}`;
     window.open(waUrl, '_blank');
+
     regForm.reset();
-    alert("Anda akan diarahkan ke WhatsApp untuk konfirmasi pendaftaran.");
+    alert("✅ Data valid. Anda akan diarahkan ke WhatsApp untuk konfirmasi pendaftaran.");
   });
 }
