@@ -635,7 +635,14 @@ footer {
 
 /* ========== Responsive Tablet & HP ========== */
 @media (max-width: 768px) {
-
+.testimonials .btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 16px;
+  }
+    
   /* Footer */
   .footer-content {
     flex-direction: column;
@@ -705,8 +712,6 @@ footer {
     grid-template-columns: 1fr;
   }
 }
-
-
 /* ========== Responsive HP Kecil ========== */
 @media (max-width: 480px) {
   .hero-content h2 {
@@ -758,7 +763,6 @@ footer {
   width: 100%;
   border-collapse: collapse; /* biar rapi, tanpa jarak antar border */
 }
-
 .schedule-table th,
 .schedule-table td {
   text-align: center;   /* teks rata tengah */
@@ -885,4 +889,5 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
