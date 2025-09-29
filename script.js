@@ -1,7 +1,7 @@
 // script.js (full) - Replace seluruh file dengan ini
 
 // ========== Config / Endpoints ==========
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxDd4T8G349lYRUgHQ1DUIMwbdRQwk6bozEEvuwpGHJo_0Vtlm00q5J8K_kjipI_DhzQg/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxfAcxN3gOnKA4bs5Fd7OC-FGA9uJPR9XmydkPo-1iXpMKfvyFijWSHWuZADPFhYe7zgg/exec';
 
 // ========== Utilities ==========
 function escapeHtml(str) {
@@ -212,4 +212,5 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log('ℹ️ Registration form not found (skipped attaching handler). If you want form submit to work, add id="registration-form" to your form.');
   }
 });
+
 
