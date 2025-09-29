@@ -1,219 +1,159 @@
-// script.js (full) - Replace seluruh file dengan ini
+// === KONFIGURASI ===
+const GAS_URL = "PASTE_URL_WEBAPP_ANDA_DI_SINI"; // ganti dengan Web App URL Google Apps Script
 
-// ========== Config / Endpoints ==========
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxfAcxN3gOnKA4bs5Fd7OC-FGA9uJPR9XmydkPo-1iXpMKfvyFijWSHWuZADPFhYe7zgg/exec';
-
-// ========== Utilities ==========
-function escapeHtml(str) {
-  return String(str || '')
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+// === Fungsi umum ===
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.innerText = text;
+  return div.innerHTML;
 }
 
-// ========== Testimonials ==========
-function renderTestimonials(list) {
-  const container = document.querySelector('.testimonials-slider');
-  if (!container) {
-    console.warn("⚠️ .testimonials-slider tidak ditemukan di DOM");
+// === TESTIMONI ===
+function renderTestimonials(testimonials) {
+  const container = document.querySelector(".testimonials-slider");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (testimonials.length === 0) {
+    container.innerHTML = "<p>Belum ada testimoni.</p>";
     return;
   }
 
-  console.log(`🎨 Render ${list.length || 0} testimonial ke DOM`);
-  container.innerHTML = '';
-
-  if (!list || !list.length) {
-    container.innerHTML = '<p>Belum ada ulasan publik.</p>';
-    return;
-  }
-
-  list.forEach((t, i) => {
-    console.log(`➡️ [${i + 1}] ${t.name}: ${t.message}`);
-
-    const card = document.createElement('div');
-    card.className = 'testimonial-card';
+  testimonials.forEach(t => {
+    const card = document.createElement("div");
+    card.className = "testimonial-card";
     card.innerHTML = `
-      <p class="testimonial-text">"${escapeHtml(t.message)}"</p>
-      <div class="testimonial-author">
-        <img src="https://picsum.photos/seed/${encodeURIComponent(t.name)}/60/60.jpg" 
-             alt="${escapeHtml(t.name)}" 
-             class="author-avatar">
-        <div class="author-info">
-          <h4>${escapeHtml(t.name)}</h4>
-          <small>${new Date(t.timestamp).toLocaleString()}</small>
-        </div>
-      </div>
+      <p>"${escapeHtml(t.message)}"</p>
+      <h4>- ${escapeHtml(t.name)}</h4>
     `;
     container.appendChild(card);
   });
 }
 
-// Ambil testimonial (default 5 terbaru, atau all jika showAll=true)
 async function fetchTestimonials(showAll = false) {
-  console.log("📡 Fetching testimonials dari Google Sheets...");
   try {
     const url = showAll ? `${GAS_URL}?all=true` : GAS_URL;
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    console.log("✅ Data berhasil diambil:", data);
+    console.log("✅ Data testimonial:", data);
     renderTestimonials(data);
   } catch (err) {
-    console.error("❌ Gagal fetch testimonials:", err);
-    // fallback: tampilkan pesan
-    const container = document.querySelector('.testimonials-slider');
-    if (container) container.innerHTML = '<p>Gagal memuat ulasan.</p>';
+    console.error("❌ Gagal ambil testimonial:", err);
   }
 }
 
-// Kirim testimonial (POST). Pastikan kita sertakan "type":"testimonial"
 async function postTestimonial(name, message) {
-  console.log(`✍️ Mengirim testimonial baru (no-cors): ${name} - ${message}`);
-  const payload = { type: 'testimonial', name: name, message: message };
-
-  try {
-    // mode: 'no-cors' supaya request tidak diblokir oleh CORS di GitHub Pages.
-    // note: response akan opaque, jadi kita tidak dapat membaca JSON response.
-    await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      mode: 'no-cors'
-    });
-
-    alert('✅ Ulasan berhasil dikirim! Tunggu sebentar untuk muncul di daftar.');
-    // reload testimonials (beri jeda supaya sheet sempat update)
-    setTimeout(() => fetchTestimonials(), 2000);
-  } catch (err) {
-    console.error("❌ Error postTestimonial (no-cors):", err);
-    alert('⚠️ Terjadi error saat mengirim ulasan.');
-  }
-}
-
-// Prompt user untuk input testimonial (dipanggil dari tombol)
-function addNewTestimonial() {
-  const name = prompt("Masukkan nama Anda:");
-  const comment = prompt("Masukkan ulasan Anda:");
-  if (!name || !comment) {
-    alert('Nama dan ulasan wajib diisi.');
-    return;
-  }
-  postTestimonial(name.trim(), comment.trim());
-}
-
-// ========== Registration Form Handling ==========
-/**
- * Submit handler untuk form pendaftaran.
- * - Memerlukan form dengan id="registration-form"
- * - Field names expected: kelas, program, waktu, parentName, phone
- */
-async function submitregistration-form(e) {
-  if (e && e.preventDefault) e.preventDefault();
-
-  const form = document.getElementById('registration-form');
-  if (!form) {
-    console.warn('Form pendaftaran dengan id="registration-form" tidak ditemukan.');
-    alert('Form pendaftaran tidak tersedia.');
-    return;
-  }
-
-  // Ambil nilai - cocokkan dengan name attributes yang ada pada HTML Anda
-  const kelas = (form.querySelector('[name="kelas"]') || {}).value || '';
-  const program = (form.querySelector('[name="program"]') || {}).value || '';
-  const waktu = (form.querySelector('[name="waktu"]') || {}).value || '';
-  const parentName = (form.querySelector('[name="parentName"]') || {}).value || '';
-  const phone = (form.querySelector('[name="phone"]') || {}).value || '';
-
-  // Validasi sederhana
-  if (!parentName.trim()) { alert('Nama Orang Tua wajib diisi.'); return; }
-  if (!phone.trim()) { alert('Nomor telepon wajib diisi.'); return; }
-  if (!kelas.trim()) { alert('Silakan pilih Kelas.'); return; }
-  if (!program.trim()) { alert('Silakan pilih Program.'); return; }
-  if (!waktu.trim()) { alert('Silakan pilih waktu.'); return; }
-
-  const payload = {
-    type: 'registration',
-    kelas: kelas.trim(),
-    program: program.trim(),
-    waktu: waktu.trim(),
-    parentName: parentName.trim(),
-    phone: phone.trim()
+  const data = {
+    type: "testimonial",
+    name: name,
+    message: message
   };
 
-  console.log('📨 Kirim registration payload:', payload);
+  console.log("📨 Kirim testimonial:", data);
 
   try {
     await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      mode: 'no-cors'
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
     });
 
-    alert('✅ Pendaftaran berhasil Selamat!.');
-    form.reset();
+    alert("Testimoni berhasil dikirim!");
+    setTimeout(() => fetchTestimonials(), 2000);
+
   } catch (err) {
-    console.error('❌ Error submitregistration-form:', err);
-    alert('⚠️ Terjadi error saat mengirim pendaftaran.');
+    console.error("❌ Gagal kirim testimonial:", err);
+    alert("Terjadi error saat mengirim testimoni.");
   }
 }
 
-// Expose registration submit function for inline onsubmit (if used)
-window.submitregistration-form = submitregistration-form;
+function addNewTestimonial() {
+  const name = prompt("Masukkan nama Anda:") || "Anonim";
+  const message = prompt("Masukkan testimoni Anda:");
+  if (!message) {
+    alert("Pesan tidak boleh kosong!");
+    return;
+  }
+  postTestimonial(name, message);
+}
 
-// ========== Gallery ==========
+// === REGISTRASI ===
+async function submitRegistrationForm(event) {
+  event.preventDefault();
+  const form = event.target;
+
+  const formData = new FormData(form);
+  const data = {
+    type: "registration",
+    kelas: formData.get("kelas"),
+    program: formData.get("program"),
+    Waktu: formData.get("Waktu"),
+    parentName: formData.get("parentName"),
+    phone: formData.get("phone")
+  };
+
+  console.log("📨 Kirim registration payload:", data);
+
+  try {
+    await fetch(GAS_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    alert("Pendaftaran berhasil dikirim!");
+    form.reset();
+
+  } catch (err) {
+    console.error("❌ Gagal kirim registrasi:", err);
+    alert("Terjadi error saat mengirim pendaftaran.");
+  }
+}
+
+// === GALERI ===
 async function loadGallery() {
   try {
-    const res = await fetch('gallery.json');
+    const res = await fetch("gallery.json");
     const data = await res.json();
-    const container = document.getElementById('gallery-grid');
+    const container = document.getElementById("gallery-grid");
     if (!container) return;
 
-    container.innerHTML = '';
-    if (!data.gallery || !data.gallery.length) {
-      container.innerHTML = '<p>Belum ada foto galeri.</p>';
+    container.innerHTML = "";
+
+    if (!data.gallery || data.gallery.length === 0) {
+      container.innerHTML = "<p>Belum ada foto galeri.</p>";
       return;
     }
 
     data.gallery.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'gallery-item';
+      const div = document.createElement("div");
+      div.className = "gallery-item";
       div.innerHTML = `
-        <img src="${item.url}" alt="${escapeHtml(item.caption)}">
-        <p class="caption">${escapeHtml(item.caption)}</p>
+        <img src="${item.url}" alt="Gallery">
+        <p>${escapeHtml(item.caption)}</p>
       `;
       container.appendChild(div);
     });
+
   } catch (err) {
-    console.error('Gagal memuat gallery:', err);
-    const container = document.getElementById('gallery-grid');
-    if (container) container.innerHTML = '<p>Gagal memuat galeri.</p>';
+    console.error("❌ Gagal load gallery:", err);
   }
 }
 
-// ========== Init on Page Load ==========
-window.addEventListener('DOMContentLoaded', () => {
-  // make functions callable from HTML attributes if needed
-  window.fetchTestimonials = fetchTestimonials;
-  window.addNewTestimonial = addNewTestimonial;
-
-  // load data
-  fetchTestimonials(); // default 5 terbaru
+// === INIT ===
+document.addEventListener("DOMContentLoaded", () => {
+  fetchTestimonials();
   loadGallery();
 
-  // attach registration form handler if form exists
-  const regForm = document.getElementById('registration-form');
+  const regForm = document.getElementById("registration-form");
   if (regForm) {
-    regForm.addEventListener('submit', submitregistration-form);
-    console.log('✅ Registration form handler attached.');
-  } else {
-    console.log('ℹ️ Registration form not found (skipped attaching handler). If you want form submit to work, add id="registration-form" to your form.');
+    regForm.addEventListener("submit", submitRegistrationForm);
   }
 });
 
-
-
-
-
+// expose fungsi biar bisa dipanggil dari HTML
+window.addNewTestimonial = addNewTestimonial;
+window.fetchTestimonials = fetchTestimonials;
