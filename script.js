@@ -1,172 +1,141 @@
-// URL Apps Script
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyWa85cpYDn-mMDGp2zSPWxpZHFTsZsy5WvJh3f-KmbhCbiDj1xE0-Z_Cz0kz9D_ui1yQ/exec';
+// =====================================
+// URL Apps Script untuk ULASAN
+// =====================================
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyvD4OEf5EyTUrTm8ZVXpdJxExCGLFAcPvq6X579nubACzpzxSjiP4NxWCFG0Ky5otVbQ/exec';
 
-// Escape HTML untuk keamanan
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+// Escape HTML biar aman
+function escapeHtml(text) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, m => map[m]);
 }
 
-// Render testimonial ke DOM
-function renderTestimonials(list) {
-  const container = document.querySelector('.testimonials-slider');
-  if (!container) {
-    console.warn("⚠️ .testimonials-slider tidak ditemukan di DOM");
-    return;
+// =====================================
+// TESTIMONIALS (via Google Apps Script)
+// =====================================
+async function fetchTestimonials() {
+  try {
+    const res = await fetch(GAS_URL + "?type=testimonials&all=true");
+    const data = await res.json();
+    renderTestimonials(data);
+  } catch (err) {
+    console.error("Gagal mengambil testimoni:", err);
   }
+}
 
-  console.log(`🎨 Render ${list.length} testimonial ke DOM`);
+function renderTestimonials(list) {
+  const container = document.querySelector('.testimonials-list');
+  if (!container) return;
   container.innerHTML = '';
 
   if (!list || !list.length) {
-    container.innerHTML = '<p>Belum ada ulasan publik.</p>';
+    container.innerHTML = '<p>Belum ada ulasan.</p>';
     return;
   }
 
-  list.forEach((t, i) => {
-    console.log(`➡️ [${i + 1}] ${t.name}: ${t.message}`);
-
+  list.forEach(t => {
     const card = document.createElement('div');
     card.className = 'testimonial-card';
     card.innerHTML = `
-      <p class="testimonial-text">"${escapeHtml(t.message)}"</p>
-      <div class="testimonial-author">
-        <img src="https://picsum.photos/seed/${encodeURIComponent(t.name)}/60/60.jpg" 
-             alt="${escapeHtml(t.name)}" 
-             class="author-avatar">
-        <div class="author-info">
-          <h4>${escapeHtml(t.name)}</h4>
-          <small>${new Date(t.timestamp).toLocaleString()}</small>
-        </div>
-      </div>
+      <p>"${escapeHtml(t.message)}"</p>
+      <h4>- ${escapeHtml(t.name)}</h4>
+      <small>${new Date(t.timestamp).toLocaleString()}</small>
     `;
     container.appendChild(card);
   });
 }
 
-// Ambil testimonial (default 5 terbaru, semua kalau all=true)
-async function fetchTestimonials(showAll = false) {
-  console.log("📡 Fetching testimonials dari Google Sheets...");
-  try {
-    const url = showAll ? `${GAS_URL}?all=true` : GAS_URL;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    console.log("✅ Data berhasil diambil:", data);
-    renderTestimonials(data);
-  } catch (err) {
-    console.error("❌ Gagal fetch testimonials:", err);
-  }
-}
+const testimonialForm = document.getElementById('testimonialForm');
+if (testimonialForm) {
+  testimonialForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const message = document.getElementById('message').value.trim();
 
-// Kirim testimonial baru
-async function postTestimonial(name, message) {
-  console.log(`✍️ Mengirim testimonial baru (no-cors): ${name} - ${message}`);
-  try {
-    await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, message }),
-      mode: 'no-cors' // penting untuk bypass CORS
-    });
-
-    alert('✅ Ulasan berhasil dikirim! Tunggu sebentar untuk muncul di daftar.');
-    setTimeout(() => fetchTestimonials(), 2000); // reload list
-  } catch (err) {
-    console.error("❌ Error postTestimonial (no-cors):", err);
-    alert('⚠️ Terjadi error saat mengirim ulasan.');
-  }
-}
-
-// Prompt user untuk input testimonial
-function addNewTestimonial() {
-  const name = prompt("Masukkan nama Anda:");
-  const comment = prompt("Masukkan ulasan Anda:");
-  if (!name || !comment) {
-    alert('Nama dan ulasan wajib diisi.');
-    return;
-  }
-  postTestimonial(name.trim(), comment.trim());
-}
-
-// ========== Gallery ========== //
-async function loadGallery() {
-  try {
-    const res = await fetch('gallery.json');
-    const data = await res.json();
-    const container = document.getElementById('gallery-grid') || document.querySelector('.gallery-grid');
-    if (!container) return;
-
-    container.innerHTML = '';
-    if (!data.gallery || !data.gallery.length) {
-      container.innerHTML = '<p>Belum ada foto galeri.</p>';
+    if (!message) {
+      alert("Pesan tidak boleh kosong.");
       return;
     }
 
-    data.gallery.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'gallery-item';
-      div.innerHTML = `
-        <picture>
-          <source srcset="${item.imageWebp}" type="image/webp">
-          <img src="${item.imageFallback}" alt="${escapeHtml(item.caption)}" loading="lazy">
-        </picture>
-        <p class="caption">${escapeHtml(item.caption)}</p>
-      `;
-      container.appendChild(div);
-    });
+    try {
+      await fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({ type: "testimonial", name, message }),
+      });
+      alert("✅ Terima kasih! Ulasan Anda sudah terkirim.");
+      testimonialForm.reset();
+      fetchTestimonials();
+    } catch (err) {
+      console.error("Gagal mengirim ulasan:", err);
+      alert("❌ Terjadi kesalahan saat mengirim ulasan.");
+    }
+  });
+}
+
+// =====================================
+// GALLERY (dari gallery.json)
+// =====================================
+async function fetchGallery() {
+  try {
+    const res = await fetch("gallery.json");
+    const data = await res.json();
+    renderGallery(data.gallery);
   } catch (err) {
-    console.error('Gagal memuat gallery:', err);
+    console.error("Gagal memuat galeri:", err);
   }
 }
 
-// ========== Init on Page Load ========== //
-window.addEventListener('DOMContentLoaded', () => {
-  fetchTestimonials(); // default: 5 terbaru
-  loadGallery();
+function renderGallery(list) {
+  const container = document.querySelector('.gallery-grid');
+  if (!container) return;
+  container.innerHTML = '';
 
-    // === Registration Form Handler ===
-  const regForm = document.getElementById('registrationForm');
-  if (regForm) {
-    regForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+  list.forEach(item => {
+    const fig = document.createElement('figure');
+    fig.innerHTML = `
+      <picture>
+        <source srcset="${item.image}" type="image/webp">
+        <img src="${item.image.replace('.webp', '.jpg')}" 
+             alt="${escapeHtml(item.caption)}" loading="lazy">
+      </picture>
+      <figcaption>${escapeHtml(item.caption)}</figcaption>
+    `;
+    container.appendChild(fig);
+  });
+}
 
-      const formData = {
-        type: 'registration',
-        nama: document.getElementById('nama').value.trim(),
-        kelas: document.getElementById('kelas').value,
-        program: document.getElementById('program').value,
-        waktu: document.getElementById('waktu').value,
-        parentName: document.getElementById('parentName').value.trim(),
-        phone: document.getElementById('phone').value.trim()
-      };
+// =====================================
+// REGISTRATION (langsung ke WhatsApp)
+// =====================================
+const regForm = document.getElementById('registrationForm');
+if (regForm) {
+  regForm.addEventListener('submit', e => {
+    e.preventDefault();
 
-      try {
-        await fetch(GAS_URL, {
-          method: 'POST',
-          mode: 'no-cors', // biar nggak kena blokir CORS
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
+    const nama = document.getElementById('nama').value.trim();
+    const kelas = document.getElementById('kelas').value;
+    const program = document.getElementById('program').value;
+    const waktu = document.getElementById('waktu').value;
+    const parentName = document.getElementById('parentName').value.trim();
+    const phone = document.getElementById('phone').value.trim();
 
-        alert('✅ Pendaftaran berhasil dikirim! Kami akan segera menghubungi Anda.');
-        regForm.reset();
-      } catch (err) {
-        console.error('❌ Gagal kirim pendaftaran:', err);
-        alert('⚠️ Terjadi kesalahan saat mengirim pendaftaran. Coba lagi.');
-      }
-    });
-  }
-});
+    const pesan = 
+`Halo Admin GTX EduKids, saya ingin mendaftarkan anak saya:%0A
+👦 Nama Anak: ${nama}%0A
+🏫 Kelas: ${kelas}%0A
+📘 Program: ${program}%0A
+⏰ Waktu: ${waktu}%0A
+👩‍👦 Nama Orang Tua: ${parentName}%0A
+📱 No. WA: ${phone}`;
 
-
-
-
-
-
-
-
+    const waUrl = `https://wa.me/6283895603395?text=${pesan}`;
+    window.open(waUrl, '_blank');
+    regForm.reset();
+    alert("Anda akan diarahkan ke WhatsApp untuk konfirmasi pendaftaran.");
+  });
+}
