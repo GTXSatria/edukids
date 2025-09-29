@@ -1,5 +1,7 @@
-// script.js (testimonials)
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwzN-NQzZwR3xYjiIYYwAevtvPkUoykuzsCKDpv9HW6bl56k0t2lcIK5dbnfN0G5KhsFg/exec'; // ganti dengan Web App URL Anda
+// ========== Testimonials ==========
+
+// URL Apps Script
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwzN-NQzZwR3xYjiIYYwAevtvPkUoykuzsCKDpv9HW6bl56k0t2lcIK5dbnfN0G5KhsFg/exec';
 
 function escapeHtml(str) {
   return String(str)
@@ -12,13 +14,20 @@ function escapeHtml(str) {
 
 function renderTestimonials(list) {
   const container = document.querySelector('.testimonials-slider');
-  if (!container) return;
+  if (!container) {
+    console.warn("⚠️ .testimonials-slider tidak ditemukan di DOM");
+    return;
+  }
+  console.log(`🎨 Render ${list.length} testimonial ke DOM`);
+
   container.innerHTML = '';
   if (!list || !list.length) {
     container.innerHTML = '<p>Belum ada ulasan publik.</p>';
     return;
   }
-  list.forEach(t => {
+
+  list.forEach((t, i) => {
+    console.log(`➡️ [${i + 1}] ${t.name}: ${t.message}`);
     const card = document.createElement('div');
     card.className = 'testimonial-card';
     card.innerHTML = `
@@ -37,16 +46,20 @@ function renderTestimonials(list) {
 }
 
 async function fetchTestimonials() {
+  console.log("📡 Fetching testimonials dari Google Sheets...");
   try {
     const res = await fetch(GAS_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
+    console.log("✅ Data berhasil diambil:", data);
     renderTestimonials(data);
   } catch (err) {
-    console.error('Error fetch testimonials:', err);
+    console.error("❌ Gagal fetch testimonials:", err);
   }
 }
 
 async function postTestimonial(name, message) {
+  console.log(`✍️ Mengirim testimonial baru: ${name} - ${message}`);
   try {
     const res = await fetch(GAS_URL, {
       method: 'POST',
@@ -54,6 +67,7 @@ async function postTestimonial(name, message) {
       body: JSON.stringify({ name, message })
     });
     const json = await res.json();
+    console.log("📨 Respon server POST:", json);
     if (json.status === 'success') {
       alert('Ulasan berhasil dikirim! (menunggu persetujuan admin)');
       fetchTestimonials(); // refresh daftar
@@ -61,7 +75,7 @@ async function postTestimonial(name, message) {
       alert('Gagal mengirim ulasan.');
     }
   } catch (err) {
-    console.error('Error post testimonial:', err);
+    console.error("❌ Error postTestimonial:", err);
     alert('Terjadi error saat mengirim ulasan.');
   }
 }
@@ -112,4 +126,3 @@ window.addEventListener('DOMContentLoaded', () => {
   fetchTestimonials();
   loadGallery();
 });
-
