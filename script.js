@@ -139,3 +139,4 @@ if (regForm) {
     alert("Anda akan diarahkan ke WhatsApp untuk konfirmasi pendaftaran.");
   });
 }
+
