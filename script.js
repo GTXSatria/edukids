@@ -86,6 +86,16 @@ function addNewTestimonial() {
   postTestimonial(name.trim(), comment.trim());
 }
 
+function addNewTestimonial() {
+  const name = prompt("Masukkan nama Anda:");
+  const comment = prompt("Masukkan ulasan Anda:");
+  if (!name || !comment) {
+    alert('Nama dan ulasan wajib diisi.');
+    return;
+  }
+  postTestimonial(name.trim(), comment.trim());
+}
+
 // Load saat halaman dibuka
 window.addEventListener('DOMContentLoaded', fetchTestimonials);
 
@@ -122,6 +132,7 @@ window.addEventListener('DOMContentLoaded', () => {
   fetchTestimonials();
   loadGallery();
 });
+
 
 
 
