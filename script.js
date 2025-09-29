@@ -1,147 +1,12 @@
-// URL Apps Script
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxDd4T8G349lYRUgHQ1DUIMwbdRQwk6bozEEvuwpGHJo_0Vtlm00q5J8K_kjipI_DhzQg/exec';
+// script.js - GTX EduKids (versi lengkap dengan perbaikan gallery + mobile menu)
 
-// Escape HTML untuk keamanan
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
+// URL Web App Google Apps Script (ganti dengan URL aktifmu)
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxDd4T8G349lYRUgHQ1DUIMwbdRQwk6bozEEvuwpGHJo_0Vtlm00q5J8K_kjipI_DhzQg/exec";
 
-// Render testimonial ke DOM
-function renderTestimonials(list) {
-  const container = document.querySelector('.testimonials-slider');
-  if (!container) {
-    console.warn("⚠️ .testimonials-slider tidak ditemukan di DOM");
-    return;
-  }
-
-  console.log(`🎨 Render ${list.length} testimonial ke DOM`);
-  container.innerHTML = '';
-
-  if (!list || !list.length) {
-    container.innerHTML = '<p>Belum ada ulasan publik.</p>';
-    return;
-  }
-
-  list.forEach((t, i) => {
-    console.log(`➡️ [${i + 1}] ${t.name}: ${t.message}`);
-
-    const card = document.createElement('div');
-    card.className = 'testimonial-card';
-    card.innerHTML = `
-      <p class="testimonial-text">"${escapeHtml(t.message)}"</p>
-      <div class="testimonial-author">
-        <img src="https://picsum.photos/seed/${encodeURIComponent(t.name)}/60/60.jpg" 
-             alt="${escapeHtml(t.name)}" 
-             class="author-avatar">
-        <div class="author-info">
-          <h4>${escapeHtml(t.name)}</h4>
-          <small>${new Date(t.timestamp).toLocaleString()}</small>
-        </div>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
-
-// Ambil testimonial (default 5 terbaru, semua kalau all=true)
-async function fetchTestimonials(showAll = false) {
-  console.log("📡 Fetching testimonials dari Google Sheets...");
-  try {
-    const url = showAll ? `${GAS_URL}?all=true` : GAS_URL;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    console.log("✅ Data berhasil diambil:", data);
-    renderTestimonials(data);
-  } catch (err) {
-    console.error("❌ Gagal fetch testimonials:", err);
-  }
-}
-
-// Kirim testimonial baru
-async function postTestimonial(name, message) {
-  console.log(`✍️ Mengirim testimonial baru (no-cors): ${name} - ${message}`);
-  try {
-    await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, message }),
-      mode: 'no-cors' // penting untuk bypass CORS
-    });
-
-    alert('✅ Ulasan berhasil dikirim! Tunggu sebentar untuk muncul di daftar.');
-    setTimeout(() => fetchTestimonials(), 2000); // reload list
-  } catch (err) {
-    console.error("❌ Error postTestimonial (no-cors):", err);
-    alert('⚠️ Terjadi error saat mengirim ulasan.');
-  }
-}
-
-// Prompt user untuk input testimonial
-function addNewTestimonial() {
-  const name = prompt("Masukkan nama Anda:");
-  const comment = prompt("Masukkan ulasan Anda:");
-  if (!name || !comment) {
-    alert('Nama dan ulasan wajib diisi.');
-    return;
-  }
-  postTestimonial(name.trim(), comment.trim());
-}
-
-// ========== Gallery ========== //
-
-async function loadGallery() {
-  try {
-    const res = await fetch('gallery.json');
-    const data = await res.json();
-    const container = document.getElementById('gallery-grid');
-    if (!container) return;
-
-    container.innerHTML = '';
-    if (!data.gallery || !data.gallery.length) {
-      container.innerHTML = '<p>Belum ada foto galeri.</p>';
-      return;
-    }
-
-    data.gallery.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'gallery-item';
-      div.innerHTML = `
-        <img src="${item.url}" alt="${item.caption}">
-        <p class="caption">${item.caption}</p>
-      `;
-      container.appendChild(div);
-    });
-  } catch (err) {
-    console.error('Gagal memuat gallery:', err);
-  }
-}
-
-// ========== Init on Page Load ========== //
-window.addEventListener('DOMContentLoaded', () => {
-  fetchTestimonials(); // default: 5 terbaru
-  /* gallery-fix.js
- * Perbaikan fungsi loadGallery untuk GTX EduKids
- * - Mendukung format JSON: either top-level array or { gallery: [...] }
- * - Menggunakan properti `image` (fallback ke `url`/`src` jika ada)
- * - Menambahkan `alt` dan `loading="lazy"`
- * - Error handling dan pesan kosong
- *
- * Cara pakai:
- * 1) Ganti fungsi loadGallery di script.js dengan isi file ini, atau
- * 2) Tambahkan file ini ke project dan panggil setelah script.js di index.html:
- *    <script src="gallery-fix.js"></script>
- */
-
-// safe-escape untuk teks yang akan dimasukkan ke DOM
+// ========== Helper ========== //
 function escapeHtml(str) {
   if (str === null || str === undefined) return '';
-  return String(str).replace(/[&<>\"']/g, function (s) {
+  return String(str).replace(/[&<>"']/g, function (s) {
     return ({
       '&': '&amp;',
       '<': '&lt;',
@@ -152,24 +17,79 @@ function escapeHtml(str) {
   });
 }
 
-async function loadGallery() {
-  // cari container gallery — dukung beberapa kemungkinan selector
-  const container = document.querySelector('.gallery-grid') || document.querySelector('#gallery .gallery-grid');
-  if (!container) {
-    console.warn('[gallery-fix] gallery container (.gallery-grid) tidak ditemukan di DOM.');
+// ========== Testimonials ========== //
+async function fetchTestimonials(all = false) {
+  try {
+    const url = all ? `${GAS_URL}?all=true` : GAS_URL;
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    const data = await resp.json();
+    renderTestimonials(data);
+  } catch (err) {
+    console.error("[Testimonials] gagal fetch:", err);
+  }
+}
+
+function renderTestimonials(testimonials) {
+  const container = document.getElementById("testimonials-container");
+  if (!container) return;
+  container.innerHTML = "";
+
+  if (!testimonials || testimonials.length === 0) {
+    container.innerHTML = '<p>Belum ada testimoni.</p>';
     return;
   }
 
+  testimonials.forEach(t => {
+    const card = document.createElement("div");
+    card.className = "testimonial-card";
+    card.innerHTML = `
+      <p class="testimonial-text">\"${escapeHtml(t.message)}\"</p>
+      <div class="testimonial-author">
+        <img src="https://i.pravatar.cc/50?u=${encodeURIComponent(t.name)}" alt="avatar" class="author-avatar">
+        <div class="author-info">
+          <h4>${escapeHtml(t.name)}</h4>
+          <p>${new Date(t.timestamp).toLocaleDateString()}</p>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+async function postTestimonial(name, message) {
   try {
-    // fetch dengan cache-busting jika perlu
+    await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, message })
+    });
+    fetchTestimonials();
+  } catch (err) {
+    console.error("[Testimonials] gagal post:", err);
+  }
+}
+
+function addNewTestimonial() {
+  const name = prompt("Nama Anda:") || "Anonim";
+  const message = prompt("Pesan/Ulasan:");
+  if (message && message.trim() !== "") {
+    postTestimonial(name, message);
+  }
+}
+
+// ========== Gallery ========== //
+async function loadGallery() {
+  const container = document.querySelector('.gallery-grid');
+  if (!container) return;
+
+  try {
     const resp = await fetch('gallery.json', { cache: 'no-cache' });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
 
     const data = await resp.json();
-    // dukung dua format: array langsung atau object { gallery: [...] }
     const items = Array.isArray(data) ? data : (Array.isArray(data.gallery) ? data.gallery : []);
 
-    // kosongkan container sebelum render
     container.innerHTML = '';
 
     if (!items || items.length === 0) {
@@ -178,27 +98,18 @@ async function loadGallery() {
     }
 
     items.forEach(item => {
-      // dukungan fallback properti (image, url, src)
       const src = item.image || item.url || item.src || '';
       const caption = item.caption || item.title || '';
 
       const card = document.createElement('div');
       card.className = 'gallery-item';
 
-      // buat elemen <img>
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = escapeHtml(caption) || 'Gallery image';
-      img.loading = 'lazy';
-      img.decoding = 'async';
-
-      // opsional: jika src kosong, jangan coba tampilkan gambar
-      if (!src) {
-        const placeholder = document.createElement('div');
-        placeholder.className = 'gallery-placeholder';
-        placeholder.textContent = caption || 'No image available';
-        card.appendChild(placeholder);
-      } else {
+      if (src) {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = escapeHtml(caption) || 'Gallery image';
+        img.loading = 'lazy';
+        img.decoding = 'async';
         card.appendChild(img);
       }
 
@@ -209,20 +120,26 @@ async function loadGallery() {
 
       container.appendChild(card);
     });
-
   } catch (err) {
-    console.error('[gallery-fix] Gagal memuat gallery.json:', err);
+    console.error('[Gallery] Gagal memuat gallery.json:', err);
     container.innerHTML = '<p class="gallery-error">Gagal memuat galeri. Silakan coba lagi nanti.</p>';
   }
 }
 
-// Pastikan function dipanggil satu kali saat DOM siap. Jika script.js lama
-// sudah memanggil loadGallery(), kamu bisa menghapus pemanggilan ganda.
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadGallery);
-} else {
-  // jika DOM sudah siap, panggil langsung
-  loadGallery();
-}
-});
+// ========== Mobile Menu ========== //
+function initMobileMenu() {
+  const menuBtn = document.querySelector('.mobile-menu');
+  const navMenu = document.querySelector('.nav-menu');
+  if (!menuBtn || !navMenu) return;
 
+  menuBtn.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+}
+
+// ========== Init ========== //
+document.addEventListener('DOMContentLoaded', () => {
+  fetchTestimonials();
+  loadGallery();
+  initMobileMenu();
+});
