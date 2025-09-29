@@ -1,5 +1,5 @@
 // URL Apps Script
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxDd4T8G349lYRUgHQ1DUIMwbdRQwk6bozEEvuwpGHJo_0Vtlm00q5J8K_kjipI_DhzQg/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxfAcxN3gOnKA4bs5Fd7OC-FGA9uJPR9XmydkPo-1iXpMKfvyFijWSHWuZADPFhYe7zgg/exec';
 
 // Escape HTML untuk keamanan
 function escapeHtml(str) {
@@ -128,4 +128,38 @@ async function loadGallery() {
 window.addEventListener('DOMContentLoaded', () => {
   fetchTestimonials(); // default: 5 terbaru
   loadGallery();
+
+    // === Registration Form Handler ===
+  const regForm = document.getElementById('registrationForm');
+  if (regForm) {
+    regForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = {
+        type: 'registration',
+        nama: document.getElementById('nama').value.trim(),
+        kelas: document.getElementById('kelas').value,
+        program: document.getElementById('program').value,
+        waktu: document.getElementById('waktu').value,
+        parentName: document.getElementById('parentName').value.trim(),
+        phone: document.getElementById('phone').value.trim()
+      };
+
+      try {
+        await fetch(GAS_URL, {
+          method: 'POST',
+          mode: 'no-cors', // biar nggak kena blokir CORS
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        alert('✅ Pendaftaran berhasil dikirim! Kami akan segera menghubungi Anda.');
+        regForm.reset();
+      } catch (err) {
+        console.error('❌ Gagal kirim pendaftaran:', err);
+        alert('⚠️ Terjadi kesalahan saat mengirim pendaftaran. Coba lagi.');
+      }
+    });
+  }
 });
+
