@@ -129,3 +129,4 @@ window.addEventListener('DOMContentLoaded', () => {
   fetchTestimonials(); // default: 5 terbaru
   loadGallery();
 });
+
