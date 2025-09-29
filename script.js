@@ -152,7 +152,7 @@ async function submitRegistration-Form(e) {
       mode: 'no-cors'
     });
 
-    alert('✅ Pendaftaran berhasil dikirim! Terima kasih.');
+    alert('✅ Pendaftaran berhasil Selamat!.');
     form.reset();
   } catch (err) {
     console.error('❌ Error submitRegistration-Form:', err);
@@ -212,6 +212,7 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log('ℹ️ Registration form not found (skipped attaching handler). If you want form submit to work, add id="registration-form" to your form.');
   }
 });
+
 
 
 
