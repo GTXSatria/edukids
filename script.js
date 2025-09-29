@@ -94,11 +94,12 @@ function addNewTestimonial() {
 }
 
 // ========== Gallery ========== //
+
 async function loadGallery() {
   try {
     const res = await fetch('gallery.json');
     const data = await res.json();
-    const container = document.getElementById('gallery-grid') || document.querySelector('.gallery-grid');
+    const container = document.getElementById('gallery-grid');
     if (!container) return;
 
     container.innerHTML = '';
@@ -111,11 +112,8 @@ async function loadGallery() {
       const div = document.createElement('div');
       div.className = 'gallery-item';
       div.innerHTML = `
-        <picture>
-          <source srcset="${item.imageWebp}" type="image/webp">
-          <img src="${item.imageFallback}" alt="${escapeHtml(item.caption)}" loading="lazy">
-        </picture>
-        <p class="caption">${escapeHtml(item.caption)}</p>
+        <img src="${item.url}" alt="${item.caption}">
+        <p class="caption">${item.caption}</p>
       `;
       container.appendChild(div);
     });
@@ -127,11 +125,110 @@ async function loadGallery() {
 // ========== Init on Page Load ========== //
 window.addEventListener('DOMContentLoaded', () => {
   fetchTestimonials(); // default: 5 terbaru
-  loadGallery();
+  /* gallery-fix.js
+ * Perbaikan fungsi loadGallery untuk GTX EduKids
+ * - Mendukung format JSON: either top-level array or { gallery: [...] }
+ * - Menggunakan properti `image` (fallback ke `url`/`src` jika ada)
+ * - Menambahkan `alt` dan `loading="lazy"`
+ * - Error handling dan pesan kosong
+ *
+ * Cara pakai:
+ * 1) Ganti fungsi loadGallery di script.js dengan isi file ini, atau
+ * 2) Tambahkan file ini ke project dan panggil setelah script.js di index.html:
+ *    <script src="gallery-fix.js"></script>
+ */
 
+// safe-escape untuk teks yang akan dimasukkan ke DOM
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str).replace(/[&<>\"']/g, function (s) {
+    return ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[s];
+  });
+}
+
+async function loadGallery() {
+  // cari container gallery — dukung beberapa kemungkinan selector
+  const container = document.querySelector('.gallery-grid') || document.querySelector('#gallery .gallery-grid');
+  if (!container) {
+    console.warn('[gallery-fix] gallery container (.gallery-grid) tidak ditemukan di DOM.');
+    return;
+  }
+
+  try {
+    // fetch dengan cache-busting jika perlu
+    const resp = await fetch('gallery.json', { cache: 'no-cache' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+
+    const data = await resp.json();
+    // dukung dua format: array langsung atau object { gallery: [...] }
+    const items = Array.isArray(data) ? data : (Array.isArray(data.gallery) ? data.gallery : []);
+
+    // kosongkan container sebelum render
+    container.innerHTML = '';
+
+    if (!items || items.length === 0) {
+      container.innerHTML = '<p class="gallery-empty">Tidak ada gambar di galeri.</p>';
+      return;
+    }
+
+    items.forEach(item => {
+      // dukungan fallback properti (image, url, src)
+      const src = item.image || item.url || item.src || '';
+      const caption = item.caption || item.title || '';
+
+      const card = document.createElement('div');
+      card.className = 'gallery-item';
+
+      // buat elemen <img>
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = escapeHtml(caption) || 'Gallery image';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+
+      // opsional: jika src kosong, jangan coba tampilkan gambar
+      if (!src) {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'gallery-placeholder';
+        placeholder.textContent = caption || 'No image available';
+        card.appendChild(placeholder);
+      } else {
+        card.appendChild(img);
+      }
+
+      const p = document.createElement('p');
+      p.className = 'caption';
+      p.textContent = caption;
+      card.appendChild(p);
+
+      container.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error('[gallery-fix] Gagal memuat gallery.json:', err);
+    container.innerHTML = '<p class="gallery-error">Gagal memuat galeri. Silakan coba lagi nanti.</p>';
+  }
+}
+
+// Pastikan function dipanggil satu kali saat DOM siap. Jika script.js lama
+// sudah memanggil loadGallery(), kamu bisa menghapus pemanggilan ganda.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadGallery);
+} else {
+  // jika DOM sudah siap, panggil langsung
+  loadGallery();
+}
 });
 
-// === Registration (via WhatsApp) ===
+// =====================================
+// REGISTRATION (langsung ke WhatsApp)
+// =====================================
 const regForm = document.getElementById('registrationForm');
 if (regForm) {
   regForm.addEventListener('submit', e => {
@@ -144,25 +241,18 @@ if (regForm) {
     const parentName = document.getElementById('parentName').value.trim();
     const phone = document.getElementById('phone').value.trim();
 
-    // 🔍 Validasi sederhana
-    if (!nama || !kelas || !program || !waktu || !parentName || !phone) {
-      alert("⚠️ Semua field wajib diisi sebelum mendaftar.");
-      return;
-    }
-
     const pesan = 
-`Halo Admin GTX EduKids, saya ingin mendaftarkan anak saya:%0A%0A
+`Halo Admin GTX EduKids, saya ingin mendaftarkan anak saya:%0A
 👦 Nama Anak: ${nama}%0A
 🏫 Kelas: ${kelas}%0A
 📘 Program: ${program}%0A
-⏰ Waktu: ${waktu}:00 WIB%0A
+⏰ Waktu: ${waktu}%0A
 👩‍👦 Nama Orang Tua: ${parentName}%0A
 📱 No. WA: ${phone}`;
 
     const waUrl = `https://wa.me/6283895603395?text=${pesan}`;
     window.open(waUrl, '_blank');
-
     regForm.reset();
-    alert("✅ Data valid. Anda akan diarahkan ke WhatsApp untuk konfirmasi pendaftaran.");
+    alert("Anda akan diarahkan ke WhatsApp untuk konfirmasi pendaftaran.");
   });
 }
