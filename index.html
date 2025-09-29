@@ -1,371 +1,368 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTX EduKids - Bimbel Anak Sekolah Dasar</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTX EduKids - Bimbel Anak Sekolah Dasar</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-            <img src="images/logo.png" alt="GTX EduKids Logo">
-            </div>
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#program">Program</a></li>
-                    <li><a href="#jadwal">Jadwal</a></li>
-                    <li><a href="#pendaftaran">Pendaftaran</a></li>
-                    <li><a href="#testimoni">Ulasan</a></li>
-                    <li><a href="#kontak">Kontak</a></li>
-                </ul>
-                <div class="mobile-menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h2>Anak Generasi Emas </h2>
-            <p>Bimbingan Belajar Matematika</p>
-            <div class="hero-actions">
-            <a href="#pendaftaran" class="btn btn-primary">Daftar Sekarang</a>
-            <a href="#kontak" class="btn btn-secondary">Hubungi Kami</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="mengapa-kami" class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Mengapa Memilih GTX EduKids?</h2>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <h3>Tenaga Pndidik</h3>
-                    <p>* Mengajar matematika dengan metode pembelajaran interaktif dan menyenangkan.</p>
-                    <p>* dengan fasilitas ruangan yang nyaman dan bersih membantu suasana bermain sambil belajar.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-book-open"></i>
-                    </div>
-                    <h3>Kurikulum Terintegrasi</h3>
-                    <p>* Pembelajaran pendekatan holistik dan kreatif.</p>
-                    <p>* Pembelajaran dilakukan 2 x dalam seminggu.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Bank Soal Latihan</h3>
-                    <p>Siswa diberikan latihan dalam berbagai macam bentuk dan tingkatan kesulitan sehingga akan menambah kreatifitas berpikir dengan teliti.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<!-- Testimonials Section -->
-<section id="testimoni" class="testimonials">
-  <div class="container">
-    <div class="section-title">
-      <h2>Apa Kata Orang Tua?</h2>
-    </div>
-
-    <!-- Container diisi otomatis lewat JS -->
-    <div class="testimonials-slider"></div>
-
-    <!-- Tombol Tambah Ulasan -->
-    <button class="btn add-testimonial-btn" onclick="addNewTestimonial()">
-      <i class="fas fa-plus-circle"></i> Tambah Ulasan
-    </button>
-
-    <!-- Tombol Show All -->
-    <button class="btn show-all-btn" onclick="fetchTestimonials(true)">
-      <i class="fas fa-list"></i> Show All
-    </button>
-
-    <!-- Tombol Show Less -->
-    <button class="btn show-less-btn" onclick="fetchTestimonials(false)">
-      <i class="fas fa-compress"></i> Show Less
-    </button>
-  </div>
-</section>
-
-<!-- Gallery Section -->
-<section id="gallery" class="gallery">
-  <div class="container">
-    <div class="section-title">
-      <h2>Galeri Kegiatan</h2>
-    </div>
-    <div id="gallery-grid" class="gallery-grid">
-      <!-- Gambar akan dimuat dari gallery.json -->
-    </div>
-  </div>
-</section>
-
-    <!-- Programs Section -->
-    <section id="program" class="programs">
-        <div class="container">
-            <div class="section-title">
-                <h2>Program Kelas Unggulan</h2>
-            </div>
-            <div class="programs-grid">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3>Intensif Akademik</h3>
-                    <p>Diperuntukan untuk Siswa/i Kelas 1 s/d 4 SD, Fokus pada pelajaran Matematika Dasar Operasi bilangan dengan metode pembelajaran interaktif.</p>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-puzzle-piece"></i>
-                    </div>
-                    <h3>Creative Learning</h3>
-                    <p>Diperuntukan untuk Siswa/i Kelas 5 SD, Pembelajaran Matematika berbasis proyek dengan pendekatan kreatif dan inovatif.</p>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-running"></i>
-                    </div>
-                    <h3>Olimpiade & Prestasi</h3>
-                    <p>Diperuntukan untuk Siswa/i Kelas 6 SD. Persiapan Ulangan Harian dan Sumatif serta kompetisi Olimpiade Sains Nasional.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Schedule Section -->
-    <section id="jadwal" class="schedule">
-        <div class="container">
-            <div class="section-title">
-                <h2>Jadwal Kelas</h2>
-            </div>
-            <div class="schedule-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Hari</th>
-                            <th>Waktu</th>
-                            <th>Program</th>
-                            <th>Kelas</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Sabtu</td>
-                            <td>Menyesuaikan</td>
-                            <td>Intensif Akademik</td>
-                            <td>1-2-3-4 SD</td>
-                        </tr>
-                        <tr>
-                            <td>Sabtu</td>
-                            <td>Menyesuaikan</td>
-                            <td>Intensif Akademik</td>
-                            <td>1-2-3-4 SD</td>
-                        </tr>
-                        <tr>
-                            <td>Sabtu</td>
-                            <td>Menyesuaikan</td>
-                            <td>Creative Learning</td>
-                            <td>Kelas 5 SD</td>
-                        </tr>
-                        <tr>
-                            <td>Sabtu</td>
-                            <td>Menyesuaikan</td>
-                            <td>Olimpiade & Prestasi</td>
-                            <td>Kelas 6 SD</td>
-                        </tr>
-                        <tr>
-                            <td>Minggu</td>
-                            <td>Menyesuaikan</td>
-                            <td>Intensif Akademik</td>
-                            <td>1-2-3-4 SD</td>
-                        </tr>
-                        <tr>
-                            <td>Minggu</td>
-                            <td>Menyesuaikan</td>
-                            <td>Intensif Akademik</td>
-                            <td>1-2-3-4 SD</td>
-                        </tr>
-                        <tr>
-                            <td>Minggu</td>
-                            <td>Menyesuaikan</td>
-                            <td>Creative Learning</td>
-                            <td>Kelas 5 SD</td>
-                        </tr>
-                        <tr>
-                            <td>Minggu</td>
-                            <td>Menyesuaikan</td>
-                            <td>Olimpiade & Prestasi</td>
-                            <td>Kelas 6 SD</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- Registration Section -->
-    <section id="pendaftaran" class="registration">
-        <div class="container">
-            <div class="section-title">
-                <h2>Daftar Sekarang</h2>
-            </div>
-            <div class="form-container">
-                <form id="registrationform">
-                    <div class="form-group">
-                        <label for="nama">Nama Anak</label>
-                        <input type="text" id="nama" name="nama" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="kelas">Kelas</label>
-                        <select id="kelas" name="kelas" required>
-                            <option value="">Pilih Kelas</option>
-                            <option value="1">Kelas 1</option>
-                            <option value="2">Kelas 2</option>
-                            <option value="3">Kelas 3</option>
-                            <option value="4">Kelas 4</option>
-                            <option value="5">Kelas 5</option>
-                            <option value="6">Kelas 6</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="program">Program</label>
-                        <select id="program" name="program" required>
-                            <option value="">Pilih Program</option>
-                            <option value="intensif">Intensif Akademik</option>
-                            <option value="creative">Creative Learning</option>
-                            <option value="olimpiade">Olimpiade & Prestasi</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="waktu">Waktu Yang Dipilih(Silahkan isi Jam kesiapan anak ikut bimbel)</label>
-                        <select id="waktu" name="waktu" required>
-                            <option value="">Pilih Waktu</option>
-                            <option value="8">08:00 WIB</option>
-                            <option value="9">09:00 WIB</option>
-                            <option value="10">10:00 WIB</option>
-                            <option value="14">14:00 WIB</option>
-                            <option value="15">15:00 WIB</option>
-                            <option value="16">16:00 WIB</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="parentName">Nama Orang Tua</label>
-                        <input type="text" id="parentName" name="parentName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Nomor Telepon/Whatsapp</label>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Daftar Sekarang</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="kontak" class="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Hubungi Kami</h2>
-            </div>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>Jl. Batalyon 323 No 22 Rt23 Rw 11 Kel Purwaharja Kec Purwaharja Kota Banjar, Jawa Barat 46331</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone-alt"></i>
-                    <p>+62 838-9560-3395</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <p>eswepe11@gmail.com<br>ade.susandi49@guru.paud.belajar.id</p>
-                </div>
-            </div>
-            <section id="lokasi">
-  <h2>📍 Lokasi Kami</h2>
-  <div class="map-container">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d588.2050498898932!2d108.54126008503886!3d-7.358813178283551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f63b15d7bcb3b%3A0x5b16192b6fa990f7!2sGTX%20Satria!5e0!3m2!1sid!2sid!4v1759109552212!5m2!1sid!2sid" 
-      style="border:0;" 
-      allowfullscreen 
-      loading="lazy" 
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
-</section>
-
-        </div>
-    </section>
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="footer-content">
-
-      <!-- Logo + tagline + sosmed -->
-      <div class="footer-left">
-        <div class="footer-logo">
-          <img src="images/logo.png" alt="GTX EduKids Logo">
-          <p>Bersama Menuju Generasi Indonesia Emas</p>
-
-          <!-- WA & YT HARUS ADA DI SINI -->
-          <div class="social-icons">
-            <a href="https://www.youtube.com/namachannel" target="_blank">
-              <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://wa.me/6283395603395" target="_blank">
-              <i class="fab fa-whatsapp"></i>
-            </a>
-          </div>
-        </div>
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="images/logo.png" alt="GTX EduKids Logo">
       </div>
-
-      <!-- Navigasi -->
-      <div class="footer-links">
-        <h3>Navigasi</h3>
-        <ul>
+      <nav>
+        <ul class="nav-menu">
           <li><a href="#home">Home</a></li>
           <li><a href="#program">Program</a></li>
           <li><a href="#jadwal">Jadwal</a></li>
           <li><a href="#pendaftaran">Pendaftaran</a></li>
+          <li><a href="#testimoni">Ulasan</a></li>
           <li><a href="#kontak">Kontak</a></li>
         </ul>
+        <div class="mobile-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h2>Anak Generasi Emas</h2>
+      <p>Bimbingan Belajar Matematika</p>
+      <div class="hero-actions">
+        <a href="#pendaftaran" class="btn btn-primary">Daftar Sekarang</a>
+        <a href="#kontak" class="btn btn-secondary">Hubungi Kami</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="mengapa-kami" class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Mengapa Memilih GTX EduKids?</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chalkboard-teacher"></i>
+          </div>
+          <h3>Tenaga Pendidik</h3>
+          <ul>
+            <li>Mengajar matematika dengan metode pembelajaran interaktif dan menyenangkan.</li>
+            <li>Fasilitas ruangan yang nyaman dan bersih membantu suasana bermain sambil belajar.</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <h3>Kurikulum Terintegrasi</h3>
+          <ul>
+            <li>Pembelajaran dengan pendekatan holistik dan kreatif.</li>
+            <li>Pembelajaran dilakukan 2 kali dalam seminggu.</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>Bank Soal Latihan</h3>
+          <p>Siswa diberikan latihan dalam berbagai macam bentuk dan tingkatan kesulitan sehingga menambah kreativitas berpikir dengan teliti.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimoni" class="testimonials">
+    <div class="container">
+      <div class="section-title">
+        <h2>Apa Kata Orang Tua?</h2>
       </div>
 
-    </div>
+      <!-- Container diisi otomatis lewat JS -->
+      <div class="testimonials-slider"></div>
 
-    <!-- Copyright -->
-    <div class="copyright">
-      <p>&copy; 2025 GTX EduKids by Ade Susandi. All rights reserved.</p>
-    </div>
-  </div>
-</footer>
+      <!-- Tombol Tambah Ulasan -->
+      <button class="btn add-testimonial-btn" onclick="addNewTestimonial()">
+        <i class="fas fa-plus-circle"></i> Tambah Ulasan
+      </button>
 
-<script src="script.js"></script>
+      <!-- Tombol Show All -->
+      <button class="btn show-all-btn" onclick="fetchTestimonials(true)">
+        <i class="fas fa-list"></i> Show All
+      </button>
+
+      <!-- Tombol Show Less -->
+      <button class="btn show-less-btn" onclick="fetchTestimonials(false)">
+        <i class="fas fa-compress"></i> Show Less
+      </button>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="gallery">
+    <div class="container">
+      <div class="section-title">
+        <h2>Galeri Kegiatan</h2>
+      </div>
+      <div id="gallery-grid" class="gallery-grid">
+        <!-- Gambar akan dimuat dari gallery.json -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs Section -->
+  <section id="program" class="programs">
+    <div class="container">
+      <div class="section-title">
+        <h2>Program Kelas Unggulan</h2>
+      </div>
+      <div class="programs-grid">
+        <div class="program-card">
+          <div class="program-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3>Intensif Akademik</h3>
+          <p>Diperuntukkan untuk siswa/i kelas 1–4 SD, fokus pada pelajaran Matematika Dasar Operasi Bilangan dengan metode pembelajaran interaktif.</p>
+        </div>
+        <div class="program-card">
+          <div class="program-icon">
+            <i class="fas fa-puzzle-piece"></i>
+          </div>
+          <h3>Creative Learning</h3>
+          <p>Diperuntukkan untuk siswa/i kelas 5 SD, pembelajaran Matematika berbasis proyek dengan pendekatan kreatif dan inovatif.</p>
+        </div>
+        <div class="program-card">
+          <div class="program-icon">
+            <i class="fas fa-running"></i>
+          </div>
+          <h3>Olimpiade & Prestasi</h3>
+          <p>Diperuntukkan untuk siswa/i kelas 6 SD. Persiapan ulangan harian, sumatif, serta kompetisi Olimpiade Sains Nasional.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schedule Section -->
+  <section id="jadwal" class="schedule">
+    <div class="container">
+      <div class="section-title">
+        <h2>Jadwal Kelas</h2>
+      </div>
+      <div class="schedule-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Hari</th>
+              <th>Waktu</th>
+              <th>Program</th>
+              <th>Kelas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sabtu</td>
+              <td>Menyesuaikan</td>
+              <td>Intensif Akademik</td>
+              <td>1–2–3–4 SD</td>
+            </tr>
+            <tr>
+              <td>Sabtu</td>
+              <td>Menyesuaikan</td>
+              <td>Intensif Akademik</td>
+              <td>1–2–3–4 SD</td>
+            </tr>
+            <tr>
+              <td>Sabtu</td>
+              <td>Menyesuaikan</td>
+              <td>Creative Learning</td>
+              <td>Kelas 5 SD</td>
+            </tr>
+            <tr>
+              <td>Sabtu</td>
+              <td>Menyesuaikan</td>
+              <td>Olimpiade & Prestasi</td>
+              <td>Kelas 6 SD</td>
+            </tr>
+            <tr>
+              <td>Minggu</td>
+              <td>Menyesuaikan</td>
+              <td>Intensif Akademik</td>
+              <td>1–2–3–4 SD</td>
+            </tr>
+            <tr>
+              <td>Minggu</td>
+              <td>Menyesuaikan</td>
+              <td>Intensif Akademik</td>
+              <td>1–2–3–4 SD</td>
+            </tr>
+            <tr>
+              <td>Minggu</td>
+              <td>Menyesuaikan</td>
+              <td>Creative Learning</td>
+              <td>Kelas 5 SD</td>
+            </tr>
+            <tr>
+              <td>Minggu</td>
+              <td>Menyesuaikan</td>
+              <td>Olimpiade & Prestasi</td>
+              <td>Kelas 6 SD</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Registration Section -->
+  <section id="pendaftaran" class="registration">
+    <div class="container">
+      <div class="section-title">
+        <h2>Daftar Sekarang</h2>
+      </div>
+      <div class="form-container">
+        <form id="registrationForm">
+          <div class="form-group">
+            <label for="nama">Nama Anak</label>
+            <input type="text" id="nama" name="nama" required>
+          </div>
+          <div class="form-group">
+            <label for="kelas">Kelas</label>
+            <select id="kelas" name="kelas" required>
+              <option value="">Pilih Kelas</option>
+              <option value="1">Kelas 1</option>
+              <option value="2">Kelas 2</option>
+              <option value="3">Kelas 3</option>
+              <option value="4">Kelas 4</option>
+              <option value="5">Kelas 5</option>
+              <option value="6">Kelas 6</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="program">Program</label>
+            <select id="program" name="program" required>
+              <option value="">Pilih Program</option>
+              <option value="intensif">Intensif Akademik</option>
+              <option value="creative">Creative Learning</option>
+              <option value="olimpiade">Olimpiade & Prestasi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="waktu">Waktu yang Dipilih (silakan isi jam kesiapan anak untuk ikut bimbel)</label>
+            <select id="waktu" name="waktu" required>
+              <option value="">Pilih Waktu</option>
+              <option value="8">08:00 WIB</option>
+              <option value="9">09:00 WIB</option>
+              <option value="10">10:00 WIB</option>
+              <option value="14">14:00 WIB</option>
+              <option value="15">15:00 WIB</option>
+              <option value="16">16:00 WIB</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="parentName">Nama Orang Tua</label>
+            <input type="text" id="parentName" name="parentName" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Nomor Telepon/Whatsapp</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Daftar Sekarang</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="kontak" class="contact">
+    <div class="container">
+      <div class="section-title">
+        <h2>Hubungi Kami</h2>
+      </div>
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <p>Jl. Batalyon 323 No 22 Rt23 Rw 11 Kel Purwaharja Kec Purwaharja Kota Banjar, Jawa Barat 46331</p>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-phone-alt"></i>
+          <p>+62 838-9560-3395</p>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <p>eswepe11@gmail.com<br>ade.susandi49@guru.paud.belajar.id</p>
+        </div>
+      </div>
+      <section id="lokasi">
+        <h2>Lokasi Kami</h2>
+        <div class="map-container">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d588.2050498898932!2d108.54126008503886!3d-7.358813178283551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f63b15d7bcb3b%3A0x5b16192b6fa990f7!2sGTX%20Satria!5e0!3m2!1sid!2sid!4v1759109552212!5m2!1sid!2sid" 
+            style="border:0;" 
+            allowfullscreen 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+
+        <!-- Logo + tagline + sosmed -->
+        <div class="footer-left">
+          <div class="footer-logo">
+            <img src="images/logo.png" alt="GTX EduKids Logo">
+            <p>Bersama Menuju Generasi Indonesia Emas</p>
+
+            <!-- WA & YT -->
+            <div class="social-icons">
+              <a href="https://www.youtube.com/namachannel" target="_blank">
+                <i class="fab fa-youtube"></i>
+              </a>
+              <a href="https://wa.me/6283395603395" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigasi -->
+        <div class="footer-links">
+          <h3>Navigasi</h3>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#program">Program</a></li>
+            <li><a href="#jadwal">Jadwal</a></li>
+            <li><a href="#pendaftaran">Pendaftaran</a></li>
+            <li><a href="#kontak">Kontak</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Copyright -->
+      <div class="copyright">
+        <p>&copy; 2025 GTX EduKids by Ade Susandi. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
