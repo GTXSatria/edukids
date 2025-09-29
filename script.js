@@ -1,8 +1,6 @@
 // script.js - GTX EduKids (versi lengkap dengan perbaikan gallery + mobile menu)
-
 // URL Web App Google Apps Script (ganti dengan URL aktifmu)
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxDd4T8G349lYRUgHQ1DUIMwbdRQwk6bozEEvuwpGHJo_0Vtlm00q5J8K_kjipI_DhzQg/exec";
-
 // ========== Helper ========== //
 function escapeHtml(str) {
   if (str === null || str === undefined) return '';
@@ -143,3 +141,4 @@ document.addEventListener('DOMContentLoaded', () => {
   loadGallery();
   initMobileMenu();
 });
+
