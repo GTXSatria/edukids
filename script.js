@@ -1,7 +1,7 @@
 // ========== Testimonials ==========
 
 // URL Apps Script
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwzN-NQzZwR3xYjiIYYwAevtvPkUoykuzsCKDpv9HW6bl56k0t2lcIK5dbnfN0G5KhsFg/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxDd4T8G349lYRUgHQ1DUIMwbdRQwk6bozEEvuwpGHJo_0Vtlm00q5J8K_kjipI_DhzQg/exec';
 
 function escapeHtml(str) {
   return String(str)
@@ -126,3 +126,4 @@ window.addEventListener('DOMContentLoaded', () => {
   fetchTestimonials();
   loadGallery();
 });
+
