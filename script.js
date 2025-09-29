@@ -109,7 +109,7 @@ function addNewTestimonial() {
  * - Memerlukan form dengan id="registration-form"
  * - Field names expected: kelas, program, waktu, parentName, phone
  */
-async function submitRegistration-Form(e) {
+async function submitregistration-form(e) {
   if (e && e.preventDefault) e.preventDefault();
 
   const form = document.getElementById('registration-form');
@@ -155,13 +155,13 @@ async function submitRegistration-Form(e) {
     alert('✅ Pendaftaran berhasil Selamat!.');
     form.reset();
   } catch (err) {
-    console.error('❌ Error submitRegistration-Form:', err);
+    console.error('❌ Error submitregistration-form:', err);
     alert('⚠️ Terjadi error saat mengirim pendaftaran.');
   }
 }
 
 // Expose registration submit function for inline onsubmit (if used)
-window.submitRegistration-Form = submitRegistration-Form;
+window.submitregistration-form = submitregistration-form;
 
 // ========== Gallery ==========
 async function loadGallery() {
@@ -206,12 +206,13 @@ window.addEventListener('DOMContentLoaded', () => {
   // attach registration form handler if form exists
   const regForm = document.getElementById('registration-form');
   if (regForm) {
-    regForm.addEventListener('submit', submitRegistration-Form);
+    regForm.addEventListener('submit', submitregistration-form);
     console.log('✅ Registration form handler attached.');
   } else {
     console.log('ℹ️ Registration form not found (skipped attaching handler). If you want form submit to work, add id="registration-form" to your form.');
   }
 });
+
 
 
 
