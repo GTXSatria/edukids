@@ -15,11 +15,11 @@ function escapeHtml(str) {
 function renderTestimonials(list) {
   const container = document.querySelector('.testimonials-slider');
   if (!container) {
-    console.warn("âš ï¸ .testimonials-slider tidak ditemukan di DOM");
+    console.warn("⚠️ .testimonials-slider tidak ditemukan di DOM");
     return;
   }
 
-  console.log(`ðŸŽ¨ Render ${list.length} testimonial ke DOM`);
+  console.log(`🎨 Render ${list.length} testimonial ke DOM`);
   container.innerHTML = '';
 
   if (!list || !list.length) {
@@ -28,7 +28,7 @@ function renderTestimonials(list) {
   }
 
   list.forEach((t, i) => {
-    console.log(`âž¡ï¸ [${i + 1}] ${t.name}: ${t.message}`);
+    console.log(`➡️ [${i + 1}] ${t.name}: ${t.message}`);
 
     const card = document.createElement('div');
     card.className = 'testimonial-card';
@@ -50,22 +50,22 @@ function renderTestimonials(list) {
 
 // Ambil testimonial (default 5 terbaru, semua kalau all=true)
 async function fetchTestimonials(showAll = false) {
-  console.log("ðŸ“¡ Fetching testimonials dari Google Sheets...");
+  console.log("📡 Fetching testimonials dari Google Sheets...");
   try {
     const url = showAll ? `${GAS_URL}?all=true` : GAS_URL;
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    console.log("âœ… Data berhasil diambil:", data);
+    console.log("✅ Data berhasil diambil:", data);
     renderTestimonials(data);
   } catch (err) {
-    console.error("âŒ Gagal fetch testimonials:", err);
+    console.error("❌ Gagal fetch testimonials:", err);
   }
 }
 
 // Kirim testimonial baru
 async function postTestimonial(name, message) {
-  console.log(`âœï¸ Mengirim testimonial baru (no-cors): ${name} - ${message}`);
+  console.log(`✍️ Mengirim testimonial baru (no-cors): ${name} - ${message}`);
   try {
     await fetch(GAS_URL, {
       method: 'POST',
@@ -74,11 +74,11 @@ async function postTestimonial(name, message) {
       mode: 'no-cors' // penting untuk bypass CORS
     });
 
-    alert('âœ… Ulasan berhasil dikirim! Tunggu sebentar untuk muncul di daftar.');
+    alert('✅ Ulasan berhasil dikirim! Tunggu sebentar untuk muncul di daftar.');
     setTimeout(() => fetchTestimonials(), 2000); // reload list
   } catch (err) {
-    console.error("âŒ Error postTestimonial (no-cors):", err);
-    alert('âš ï¸ Terjadi error saat mengirim ulasan.');
+    console.error("❌ Error postTestimonial (no-cors):", err);
+    alert('⚠️ Terjadi error saat mengirim ulasan.');
   }
 }
 
@@ -94,12 +94,11 @@ function addNewTestimonial() {
 }
 
 // ========== Gallery ========== //
-
 async function loadGallery() {
   try {
     const res = await fetch('gallery.json');
     const data = await res.json();
-    const container = document.getElementById('gallery-grid');
+    const container = document.getElementById('gallery-grid') || document.querySelector('.gallery-grid');
     if (!container) return;
 
     container.innerHTML = '';
@@ -112,8 +111,11 @@ async function loadGallery() {
       const div = document.createElement('div');
       div.className = 'gallery-item';
       div.innerHTML = `
-        <img src="${item.url}" alt="${item.caption}">
-        <p class="caption">${item.caption}</p>
+        <picture>
+          <source srcset="${item.imageWebp}" type="image/webp">
+          <img src="${item.imageFallback}" alt="${escapeHtml(item.caption)}" loading="lazy">
+        </picture>
+        <p class="caption">${escapeHtml(item.caption)}</p>
       `;
       container.appendChild(div);
     });
