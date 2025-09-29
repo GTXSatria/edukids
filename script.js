@@ -64,12 +64,12 @@ async function postTestimonial(name, message) {
     await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, message })
-      mode: 'no-cors' // penting untuk bypass CORS
+      body: JSON.stringify({ name, message }),
+      mode: 'no-cors' // ✅ koma sudah benar
     });
     alert('✅ Ulasan berhasil dikirim! Tunggu sebentar untuk muncul di daftar.');
     // reload ulasan dari Sheet
-    setTimeout(fetchTestimonials, 2000); // kasih jeda 2 detik biar sheet sempat update
+    setTimeout(fetchTestimonials, 2000);
   } catch (err) {
     console.error("❌ Error postTestimonial (no-cors):", err);
     alert('⚠️ Terjadi error saat mengirim ulasan.');
@@ -86,19 +86,6 @@ function addNewTestimonial() {
   postTestimonial(name.trim(), comment.trim());
 }
 
-function addNewTestimonial() {
-  const name = prompt("Masukkan nama Anda:");
-  const comment = prompt("Masukkan ulasan Anda:");
-  if (!name || !comment) {
-    alert('Nama dan ulasan wajib diisi.');
-    return;
-  }
-  postTestimonial(name.trim(), comment.trim());
-}
-
-// Load saat halaman dibuka
-window.addEventListener('DOMContentLoaded', fetchTestimonials);
-
 // ========== Gallery ==========
 async function loadGallery() {
   try {
@@ -107,7 +94,7 @@ async function loadGallery() {
     const container = document.getElementById('gallery-grid');
     if (!container) return;
 
-    container.innerHTML = ''; // kosongkan dulu
+    container.innerHTML = '';
     if (!data.gallery || !data.gallery.length) {
       container.innerHTML = '<p>Belum ada foto galeri.</p>';
       return;
@@ -132,7 +119,3 @@ window.addEventListener('DOMContentLoaded', () => {
   fetchTestimonials();
   loadGallery();
 });
-
-
-
-
