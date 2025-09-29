@@ -59,24 +59,20 @@ async function fetchTestimonials() {
 }
 
 async function postTestimonial(name, message) {
-  console.log(`✍️ Mengirim testimonial baru: ${name} - ${message}`);
+  console.log(`✍️ Mengirim testimonial baru (no-cors): ${name} - ${message}`);
   try {
-    const res = await fetch(GAS_URL, {
+    await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, message })
+      mode: 'no-cors' // penting untuk bypass CORS
     });
-    const json = await res.json();
-    console.log("📨 Respon server POST:", json);
-    if (json.status === 'success') {
-      alert('Ulasan berhasil dikirim! (menunggu persetujuan admin)');
-      fetchTestimonials(); // refresh daftar
-    } else {
-      alert('Gagal mengirim ulasan.');
-    }
+    alert('✅ Ulasan berhasil dikirim! Tunggu sebentar untuk muncul di daftar.');
+    // reload ulasan dari Sheet
+    setTimeout(fetchTestimonials, 2000); // kasih jeda 2 detik biar sheet sempat update
   } catch (err) {
-    console.error("❌ Error postTestimonial:", err);
-    alert('Terjadi error saat mengirim ulasan.');
+    console.error("❌ Error postTestimonial (no-cors):", err);
+    alert('⚠️ Terjadi error saat mengirim ulasan.');
   }
 }
 
@@ -126,4 +122,5 @@ window.addEventListener('DOMContentLoaded', () => {
   fetchTestimonials();
   loadGallery();
 });
+
 
