@@ -107,7 +107,7 @@ function addNewTestimonial() {
 /**
  * Submit handler untuk form pendaftaran.
  * - Memerlukan form dengan id="registration-form"
- * - Field names expected: kelas, program, Waktu, parentName, phone
+ * - Field names expected: kelas, program, waktu, parentName, phone
  */
 async function submitRegistrationForm(e) {
   if (e && e.preventDefault) e.preventDefault();
@@ -122,7 +122,7 @@ async function submitRegistrationForm(e) {
   // Ambil nilai - cocokkan dengan name attributes yang ada pada HTML Anda
   const kelas = (form.querySelector('[name="kelas"]') || {}).value || '';
   const program = (form.querySelector('[name="program"]') || {}).value || '';
-  const waktu = (form.querySelector('[name="Waktu"]') || {}).value || '';
+  const waktu = (form.querySelector('[name="waktu"]') || {}).value || '';
   const parentName = (form.querySelector('[name="parentName"]') || {}).value || '';
   const phone = (form.querySelector('[name="phone"]') || {}).value || '';
 
@@ -131,13 +131,13 @@ async function submitRegistrationForm(e) {
   if (!phone.trim()) { alert('Nomor telepon wajib diisi.'); return; }
   if (!kelas.trim()) { alert('Silakan pilih Kelas.'); return; }
   if (!program.trim()) { alert('Silakan pilih Program.'); return; }
-  if (!waktu.trim()) { alert('Silakan pilih Waktu.'); return; }
+  if (!waktu.trim()) { alert('Silakan pilih waktu.'); return; }
 
   const payload = {
     type: 'registration',
     kelas: kelas.trim(),
     program: program.trim(),
-    Waktu: waktu.trim(),
+    waktu: waktu.trim(),
     parentName: parentName.trim(),
     phone: phone.trim()
   };
@@ -212,3 +212,4 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log('ℹ️ Registration form not found (skipped attaching handler). If you want form submit to work, add id="registration-form" to your form.');
   }
 });
+
