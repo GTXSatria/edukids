@@ -80,18 +80,29 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+<!-- Testimonials Section -->
 <section id="testimoni" class="testimonials">
   <div class="container">
     <div class="section-title">
       <h2>Apa Kata Orang Tua?</h2>
     </div>
-    <div class="testimonials-slider">
-      <!-- Sekarang kosong, akan diisi otomatis dari Google Sheet -->
-    </div>
+
+    <!-- Container diisi otomatis lewat JS -->
+    <div class="testimonials-slider"></div>
+
     <!-- Tombol Tambah Ulasan -->
     <button class="btn add-testimonial-btn" onclick="addNewTestimonial()">
       <i class="fas fa-plus-circle"></i> Tambah Ulasan
+    </button>
+
+    <!-- Tombol Show All -->
+    <button class="btn show-all-btn" onclick="fetchTestimonials(true)">
+      <i class="fas fa-list"></i> Show All
+    </button>
+
+    <!-- Tombol Show Less -->
+    <button class="btn show-less-btn" onclick="fetchTestimonials(false)">
+      <i class="fas fa-compress"></i> Show Less
     </button>
   </div>
 </section>
@@ -352,4 +363,5 @@
 
 
 </body>
+
 </html>
