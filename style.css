@@ -889,9 +889,3 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
-
-/* === Kotak Ulasan (textarea) === */
-textarea {
-  width: 300px;  /* atur lebar */
-  height: 80px;  /* atur tinggi */
-}
