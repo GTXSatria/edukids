@@ -1,16 +1,3 @@
-/* gallery-fix.js
- * Perbaikan fungsi loadGallery untuk GTX EduKids
- * - Mendukung format JSON: either top-level array or { gallery: [...] }
- * - Menggunakan properti `image` (fallback ke `url`/`src` jika ada)
- * - Menambahkan `alt` dan `loading="lazy"`
- * - Error handling dan pesan kosong
- *
- * Cara pakai:
- * 1) Ganti fungsi loadGallery di script.js dengan isi file ini, atau
- * 2) Tambahkan file ini ke project dan panggil setelah script.js di index.html:
- *    <script src="gallery-fix.js"></script>
- */
-
 // safe-escape untuk teks yang akan dimasukkan ke DOM
 function escapeHtml(str) {
   if (str === null || str === undefined) return '';
@@ -97,3 +84,4 @@ if (document.readyState === 'loading') {
   // jika DOM sudah siap, panggil langsung
   loadGallery();
 }
+
