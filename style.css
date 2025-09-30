@@ -69,7 +69,7 @@ header.white-bg .nav-menu a:hover {
 
 /* === LOGO === */
 .logo img {
-    height: 120px;
+    height: 100px;
     width: 250px;
     object-fit: contain;
     mix-blend-mode: multiply;
@@ -543,10 +543,10 @@ footer {
 }
 
 .footer-logo img {
-  height: 50px;
-  width: auto;
-  object-fit: contain;
-  mix-blend-mode: multiply;
+    height: 100px;
+    width: 250px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
 }
 
 .footer-logo p {
@@ -882,6 +882,7 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
 
