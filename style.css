@@ -545,12 +545,8 @@ footer {
 .footer-logo img {
   height: 50px;
   width: auto;
-  padding: 4px 20px;
-  background-color: var(--dark-blue); 
-  border: 2px solid none;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  margin-bottom: 8px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
 }
 
 .footer-logo p {
@@ -886,5 +882,6 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
