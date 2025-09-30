@@ -68,7 +68,6 @@ header.white-bg .nav-menu a:hover {
 }
 
 /* === LOGO === */
-/* === LOGO === */
 .logo img {
     height: 120px;
     width: 250px;
@@ -77,6 +76,7 @@ header.white-bg .nav-menu a:hover {
     border: 4px solid var(--dark-blue);
     border-radius: 12px;
     box-shadow: 0 2px 6px var(--dark-blue);
+}
 .logo h1 {
     font-size: 24px;
     font-weight: 700;
@@ -555,7 +555,6 @@ footer {
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   margin-bottom: 8px;
 }
-
 .footer-logo p {
   font-size: 14px;
   color: white;
@@ -889,6 +888,7 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
 
