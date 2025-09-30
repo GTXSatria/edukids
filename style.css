@@ -69,7 +69,7 @@ header.white-bg .nav-menu a:hover {
 
 /* === LOGO === */
 .logo img {
-    height: 70px;
+    height: 120px;
     width: 250px;
     padding: 6px 50px; /* biar agak memanjang */
     background-color: var(--dark-blue); 
@@ -889,3 +889,4 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
