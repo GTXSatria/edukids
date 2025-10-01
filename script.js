@@ -1,7 +1,7 @@
 // URL Apps Script
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyWa85cpYDn-mMDGp2zSPWxpZHFTsZsy5WvJh3f-KmbhCbiDj1xE0-Z_Cz0kz9D_ui1yQ/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwidZHDzIVRF2uBQ5B2JbYUyr0VQSx83d_Ky37Am0nwQLlC47iJF6VUrTK0wp6h63ZD_w/exec';
 
-/ Escape HTML untuk keamanan
+// Escape HTML untuk keamanan
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -28,8 +28,6 @@ function renderTestimonials(list) {
   }
 
   list.forEach((t, i) => {
-    console.log(`➡️ [${i + 1}] ${t.name}: ${t.message}`);
-
     const card = document.createElement('div');
     card.className = 'testimonial-card';
     card.innerHTML = `
@@ -50,13 +48,11 @@ function renderTestimonials(list) {
 
 // Ambil testimonial (default 5 terbaru, semua kalau all=true)
 async function fetchTestimonials(showAll = false) {
-  console.log("📡 Fetching testimonials dari Google Sheets...");
   try {
     const url = showAll ? `${GAS_URL}?all=true` : GAS_URL;
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    console.log("✅ Data berhasil diambil:", data);
     renderTestimonials(data);
   } catch (err) {
     console.error("❌ Gagal fetch testimonials:", err);
@@ -65,17 +61,15 @@ async function fetchTestimonials(showAll = false) {
 
 // Kirim testimonial baru
 async function postTestimonial(name, message) {
-  console.log(`✍️ Mengirim testimonial baru (no-cors): ${name} - ${message}`);
   try {
     await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, message }),
-      mode: 'no-cors' // penting untuk bypass CORS
+      mode: 'no-cors'
     });
-
     alert('✅ Ulasan berhasil dikirim! Tunggu sebentar untuk muncul di daftar.');
-    setTimeout(() => fetchTestimonials(), 2000); // reload list
+    setTimeout(() => fetchTestimonials(), 2000);
   } catch (err) {
     console.error("❌ Error postTestimonial (no-cors):", err);
     alert('⚠️ Terjadi error saat mengirim ulasan.');
@@ -93,7 +87,7 @@ function addNewTestimonial() {
   postTestimonial(name.trim(), comment.trim());
 }
 
-// ========== Gallery ========== //
+// ========== Gallery ==========
 async function loadGallery() {
   try {
     const res = await fetch('gallery.json');
@@ -124,15 +118,15 @@ async function loadGallery() {
   }
 }
 
-// ========== Init on Page Load ========== //
+// ========== Init on Page Load ==========
 window.addEventListener('DOMContentLoaded', () => {
-  fetchTestimonials(); // default: 5 terbaru
+  fetchTestimonials(); 
   loadGallery();
-
 });
 
 // =====================================
 // REGISTRATION (langsung ke WhatsApp)
+// versi baru tanpa field Program
 // =====================================
 const regForm = document.getElementById('registrationForm');
 if (regForm) {
@@ -160,4 +154,6 @@ if (regForm) {
   });
 }
 
-
+// ==== Fix biar tombol HTML onclick bisa jalan ====
+window.addNewTestimonial = addNewTestimonial;
+window.fetchTestimonials = fetchTestimonials;
