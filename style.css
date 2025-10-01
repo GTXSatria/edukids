@@ -35,7 +35,7 @@ header {
 
 /* === MENU (untuk header biru) === */
 header .nav-menu {
-    display: flex;
+    display: none;
     gap: 30px;
 }
 
@@ -74,7 +74,7 @@ header .nav-menu a:hover {
 }
 
 .header-container {
-    display: flex;
+    display: none;
     align-items: center;
     padding: 15px 50px; /* jarak kiri kanan */
 }
@@ -86,7 +86,7 @@ nav {
 }
 
 .nav-menu {
-    display: flex;
+    display: none;
     gap: 30px;
     list-style: none;
     margin: 0;
@@ -931,6 +931,7 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
 
