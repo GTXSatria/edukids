@@ -5,11 +5,11 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    color: var(--primary-blue);
-    background-color: var(--primary-blue);
-    padding-top: 75px; /* ini sekarang terbaca */
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: var(--primary-blue);
+  background-color: var(--primary-blue);
+  padding-top: 0; /* hapus ruang kosong di atas */
 }
 
 /* Custom Properties */
@@ -130,17 +130,17 @@ nav {
 
 /* Hero Section */
 .hero {
-    background: 
-        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), /* overlay hitam transparan */
-        url('images/halaman2.png');
-    background-size: cover;
-    background-position: center;
-    padding: 120px 0;
-    display: flex;
-    align-items: center;
-    position: relative;
+  margin-top: 75px; /* turun sesuai tinggi header */
+  background: 
+      linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+      url('images/halaman2.png');
+  background-size: cover;
+  background-position: center;
+  padding: 120px 0;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
-
 .hero-content {
     position: absolute;
     left: 50%;
@@ -297,82 +297,102 @@ background-color: var(--primary-blue);
     color: var(--primary-blue);
 }
 
-/* Testimonials Section */
+/* ===== Testimonials Section ===== */
 .testimonials {
-    background-color: white;
-    padding: 80px 0;
+  background-color: white;
+  padding: 60px 0;
 }
 
 .testimonials-slider {
-    display: flex;
-    flex-direction: column; /* ubah dari row ke column */
-    gap: 20px;
-    padding: 20px 0;
-    overflow-x: unset;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* grid responsif */
+  gap: 20px;
+  padding: 20px 0;
 }
 
 .testimonial-card {
-    background-color: var(--primary-blue);
-    border-radius: 15px;
-    padding: 30px;
-    width: 100%;
-    max-width: 700px;  /* biar nyaman dibaca */
-    margin: 0 auto;    /* tengahin */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  background-color: var(--primary-blue);
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
 }
 
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
 
 .testimonial-text {
-    font-style: italic;
-    color: white;
-    margin-bottom: 25px;
+  font-style: italic;
+  margin-bottom: 15px;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .testimonial-author {
-    display: flex;
-    align-items: center;
-    color: white;
+  display: flex;
+  align-items: center;
 }
 
 .author-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-    object-fit: cover;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
 }
 
 .author-info h4 {
-    font-size: 16px;
-    color: white;
-    margin-bottom: 5px;
+  font-size: 14px;
+  margin-bottom: 3px;
 }
 
-.author-info p {
-    font-size: 14px;
-    color: #888;
+.author-info small {
+  font-size: 12px;
+  color: #ddd;
 }
 
-.add-testimonial-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 24px;       /* biar rapi dengan teks */
-  font-size: 16px;
-  border-radius: 12px;
-  background-color: var(--primary-blue);
-  color: var(--white);
+/* Tombol di section testimoni */
+.testimonials .btn {
+  display: inline-block;
+  margin: 8px 5px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #5a67d8; /* ungu biru */
+  color: #fff;
+  font-size: 15px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border: 1px solid black;
-  width: auto;              /* ⬅️ tombol menyesuaikan teks */
+  transition: background 0.3s ease;
 }
 
-.add-testimonial-btn:hover {
-    background-color: var(--dark-blue);
-    color: white;
-    border: 1px solid var(--primary-blue);
+.testimonials .btn:hover {
+  background: #434190; /* lebih gelap saat hover */
 }
+
+.add-testimonial-btn i,
+.show-all-btn i,
+.show-less-btn i {
+  margin-right: 6px;
+}
+
+.show-all-btn {
+  background: #38b2ac; /* hijau tosca */
+}
+
+.show-all-btn:hover {
+  background: #2c7a7b;
+}
+
+.show-less-btn {
+  background: #ed8936; /* oranye */
+}
+
+.show-less-btn:hover {
+  background: #c05621;
+}
+
 
 /* Programs Section */
 .programs {
@@ -515,13 +535,6 @@ input:focus, select:focus {
 .contact-item p {
     color: var(--primary-blue);
     line-height: 1.6;
-}
-
-.map-container {
-    border-radius: 15px;
-    overflow: hidden;
-    background-color: white;
-    box-shadow: 0 5px 15px var(--dark-blue);
 }
 
 footer {
@@ -741,23 +754,22 @@ footer {
 }
 
 .map-container {
-  position: relative;
-  overflow: hidden;
   width: 100%;
-  max-width: 900px;   /* biar nggak terlalu lebar di desktop */
+  max-width: 500px;
   margin: 0 auto;
-  padding-top: 56.25%; /* Rasio 16:9 */
+  height: 200px;       /* fix tinggi */
   border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .map-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
+  border: 0;
 }
+
 
 .schedule-table table {
   width: 100%;
