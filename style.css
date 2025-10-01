@@ -9,7 +9,7 @@ body {
     line-height: 1.6;
     color: var(--primary-blue);
     background-color: var(--primary-blue);
-    padding-top: 100px; /* ini sekarang terbaca */
+    padding-top: 75px; /* ini sekarang terbaca */
 }
 
 /* Custom Properties */
@@ -69,13 +69,13 @@ header.white-bg .nav-menu a:hover {
 
 /* === LOGO === */
 .logo img {
-    height: 120px;
-    width: 250px;
-    padding: 6px 50px; /* biar agak memanjang */
-    background-color: var(--dark-blue); 
-    border: 4px solid var(--dark-blue);
-    border-radius: 12px;
-    box-shadow: 0 2px 6px var(--dark-blue);
+  height: 45px;       /* tinggi cukup sedang */
+  width: auto;        /* biar proporsional */
+  padding: 0;         /* hilangkan padding atas-bawah */
+  margin-left: 20px;  /* atur jarak dari kiri */
+  background-color: none; /* hapus kotak biru jika mau */
+  border: none;       /* hapus border tebal */
+  box-shadow: none;   /* hapus bayangan */
 }
 .logo h1 {
     font-size: 24px;
@@ -555,6 +555,7 @@ footer {
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   margin-bottom: 8px;
 }
+
 .footer-logo p {
   font-size: 14px;
   color: white;
@@ -888,9 +889,4 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
-
-
-
-
-
 
