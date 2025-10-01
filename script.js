@@ -119,7 +119,7 @@ async function loadGallery() {
 }
 
 // ========== Init on Page Load ==========
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
   fetchTestimonials(); 
   loadGallery();
 
@@ -130,7 +130,7 @@ window.addEventListener('DOMContentLoaded', () => {
     hero.style.marginTop = header.offsetHeight + "px";
   }
 
-  // Kalau mau lebih dinamis (ikut resize layar):
+  // Ikut resize layar
   window.addEventListener("resize", () => {
     if (header && hero) {
       hero.style.marginTop = header.offsetHeight + "px";
@@ -171,4 +171,5 @@ if (regForm) {
 // ==== Fix biar tombol HTML onclick bisa jalan ====
 window.addNewTestimonial = addNewTestimonial;
 window.fetchTestimonials = fetchTestimonials;
+
 
