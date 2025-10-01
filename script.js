@@ -122,6 +122,20 @@ async function loadGallery() {
 window.addEventListener('DOMContentLoaded', () => {
   fetchTestimonials(); 
   loadGallery();
+
+  // ✅ Auto set hero margin sesuai tinggi header
+  const header = document.querySelector("header");
+  const hero = document.querySelector(".hero");
+  if (header && hero) {
+    hero.style.marginTop = header.offsetHeight + "px";
+  }
+
+  // Kalau mau lebih dinamis (ikut resize layar):
+  window.addEventListener("resize", () => {
+    if (header && hero) {
+      hero.style.marginTop = header.offsetHeight + "px";
+    }
+  });
 });
 
 // =====================================
@@ -157,3 +171,4 @@ if (regForm) {
 // ==== Fix biar tombol HTML onclick bisa jalan ====
 window.addNewTestimonial = addNewTestimonial;
 window.fetchTestimonials = fetchTestimonials;
+
