@@ -124,7 +124,15 @@ nav {
   display: flex;
   align-items: center;
   position: relative;
-  margin-top: calc(var(--header-height, 75px) + 20px); /* FIX */
+  margin-top: 120px; /* default desktop */
+}
+
+/* Responsif di HP */
+@media (max-width: 768px) {
+  .hero {
+    margin-top: 140px;  /* header HP lebih tinggi */
+    padding: 100px 20px;
+  }
 }
 
 .hero-content {
@@ -902,6 +910,7 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
 
