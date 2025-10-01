@@ -128,7 +128,6 @@ nav {
     transition: all 0.3s ease;
 }
 
-/* Hero Section */
 .hero {
   background: 
       linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
@@ -139,9 +138,7 @@ nav {
   display: flex;
   align-items: center;
   position: relative;
-}
-.hero {
-  margin-top: var(--header-height, 75px); /* otomatis ikut header */
+  margin-top: calc(var(--header-height, 75px) + 20px); /* FIX */
 }
 
 .hero-content {
@@ -919,6 +916,7 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
 
