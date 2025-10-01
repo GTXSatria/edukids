@@ -53,20 +53,6 @@ header .nav-menu a:hover {
     color: #ffffff;
 }
 
-/* === MENU (kalau header putih) === */
-header.white-bg {
-    background-color: var(--primary-blue);
-}
-
-header.white-bg .nav-menu a {
-    color: var(--primary-blue);    /* teks ungu-biru */
-}
-
-header.white-bg .nav-menu a:hover {
-    background-color: var(--accent-green);
-    color: #ffffff;
-}
-
 /* === LOGO === */
 .logo img {
   height: 45px;       /* tinggi cukup sedang */
@@ -916,6 +902,7 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
 
