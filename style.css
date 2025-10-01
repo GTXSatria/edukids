@@ -8,7 +8,7 @@ body {
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   color: var(--primary-blue);
-  background-color: var(--primary-blue);
+  background-color: white;
   padding-top: 0; /* hapus ruang kosong di atas */
 }
        .container {
@@ -39,9 +39,16 @@ header {
 }
 
 /* === MENU (untuk header biru) === */
-header .nav-menu {
-    display: flex;
-    }
+/* Desktop: nav terlihat, hamburger disembunyikan */
+.nav-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.mobile-menu {
+  display: none;
+}
+
 
 header .nav-menu a {
     color: #ffffff;              /* teks putih */
@@ -93,32 +100,6 @@ nav {
     margin: 0 15px; /* reset supaya tidak geser */
 }
 
-.mobile-menu {
-    display: none;
-   }
-  .nav-menu {
-    display: flex; /* menu horizontal biasa */
-    position: static;
-    flex-direction: row;
-    background: none;
-    padding: 0;
-  }
-  .nav-menu li {
-    margin: 0 15px;
-  }
-  .nav-menu a {
-    color: #fff; /* atau warna sesuai header */
-  }
-
-.mobile-menu span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: var(--primary-blue);
-    margin: 5px 0;
-    transition: all 0.3s ease;
-}
-
 /* Hero Section */
 .hero {
   margin-top: 75px; /* turun sesuai tinggi header */
@@ -145,14 +126,14 @@ nav {
 .hero-content h2 {
     font-size: 42px;
     color: #ffffff;   /* ganti putih */
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     line-height: 1.2;
 }
 
 .hero-content p {
     font-size: 18px;
     color: #f1f1f1;   /* abu-abu terang */
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .hero-actions {
@@ -225,28 +206,18 @@ background-color: var(--primary-blue);
 /* Section Title */
 .section-title {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 25px;
 }
 
 .section-title h2 {
-    font-size: 32px;
-    color: black;
-    position: relative;
-    display: inline-block;
-    padding-bottom: 15px;
+  font-size: 25px;
+  color: white; /* teksnya biar kontras */
+  background-color: var(--primary-blue); /* kotaknya */
+  display: inline-block;
+  padding: 10px 40px; /* jarak dalam kotak */
+  border-radius: 50px; /* ini bikin ujung jadi setengah lingkaran */
 }
 
-.section-title h2::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150px;
-    height: 4px;
-    background-color: black;
-    border-radius: 2px;
-}
 
 /* Features Section */
 .features {
@@ -260,7 +231,8 @@ background-color: var(--primary-blue);
 }
 
 .feature-card {
-    background-color: var(--white);
+    background-color: var(--primary-blue);
+    color: white;
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 5px 20px var(--primary-blue);
@@ -274,18 +246,18 @@ background-color: var(--primary-blue);
 
 .feature-icon {
     font-size: 40px;
-    color: var(--primary-blue);
+    color: white;
     margin-bottom: 20px;
 }
 
 .feature-card h3 {
     font-size: 20px;
-    color: var(--primary-blue);
+    color: white;
     margin-bottom: 15px;
 }
 
 .feature-card p {
-    color: var(--primary-blue);
+    color: white;
 }
 
 /* ===== Testimonials Section ===== */
@@ -306,7 +278,7 @@ background-color: var(--primary-blue);
   border-radius: 12px;
   padding: 20px;
   color: white;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px var(--primary-blue);
   transition: transform 0.2s ease;
 }
 
@@ -384,6 +356,39 @@ background-color: var(--primary-blue);
   background: #c05621;
 }
 
+/* ========== Gallery Section ========== */
+.gallery {
+  padding: 60px 0;
+  background: #f9f9ff;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+.gallery-item {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px var(--primary-blue);
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+.gallery-item:hover {
+  transform: translateY(-5px);
+}
+.gallery-item img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+.gallery-item .caption {
+  padding: 10px;
+  font-size: 14px;
+  color: #444;
+}
 
 /* Programs Section */
 .programs {
@@ -392,33 +397,34 @@ background-color: var(--primary-blue);
 
 .programs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
 }
 
 .program-card {
-    background-color: var(--white);
+    background-color: var(--primary-blue);
+    color: white;
     border-radius: 15px;
     padding: 30px;
     text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 5px 20px var(--primary-blue);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .program-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 15px 30px var(--primary-blue);
 }
 
 .program-icon {
     font-size: 40px;
-    color: var(--accent-green);
+    color: white;
     margin-bottom: 20px;
 }
 
 .program-card h3 {
     font-size: 20px;
-    color: var(--primary-blue);
+    color: white;
     margin-bottom: 15px;
 }
 
@@ -432,7 +438,7 @@ background-color: var(--primary-blue);
     background-color: var(--primary-blue);
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 5px 20px var(--primary-blue);
 }
 
 table {
@@ -444,11 +450,11 @@ th, td {
     padding: 15px 20px;
     color: var(--white);
     text-align: left;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid black;
 }
 
 th {
-    background-color: var(--dark-blue);
+    background-color: rgb(49, 41, 70);
     color: var(--white);
     font-weight: 500;
 }
@@ -460,14 +466,14 @@ tr:last-child td {
 /* Registration Section */
 .registration {
     padding: 80px 0;
-    background-color: var(--primary-blue);
+    background-color: white;
 }
 
 .form-container {
-    background-color: var(--dark-blue);
+    background-color: var(--primary-blue);
     border-radius: 15px;
     padding: 40px;
-    box-shadow: 0 5px 20px var(--dark-blue);
+    box-shadow: 0 5px 20px var(--primary-blue);
 }
 
 .form-group {
@@ -504,28 +510,61 @@ input:focus, select:focus {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
 }
 
 .contact-item {
-    background-color: var(--white);
+    background-color: var(--primary-blue);
     padding: 25px;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 5px 15px var(--primary-blue);
     display: flex;
     align-items: flex-start;
 }
 
 .contact-item i {
     font-size: 30px;
-    color: var(--primary-blue);
+    color: var(--white);
     margin-right: 20px;
     margin-top: 5px;
 }
 
 .contact-item p {
-    color: var(--primary-blue);
+    color: var(--white);
     line-height: 1.6;
+}
+
+/* Lokasi */
+#lokasi {
+  text-align: center;
+  padding: 80px 0;
+  background: #f9f9f9;
+  margin-bottom: 25px;
+}
+#lokasi h2 {
+  font-size: 25px;
+  color: white; /* teksnya biar kontras */
+  background-color: var(--primary-blue); /* kotaknya */
+  display: inline-block;
+  padding: 5px 40px; /* jarak dalam kotak */
+  border-radius: 50px; /* ini bikin ujung jadi setengah lingkaran */
+  margin-bottom: 25px; /* ✔ jarak antara judul dan peta */
+}
+
+.map-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--primary-blue);
+  box-shadow: 0 4px 8px var(--primary-blue);
+}
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 footer {
@@ -536,18 +575,19 @@ footer {
 
 .footer-content {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap; 
-  gap: 30px;
+  flex-direction: column;  /* ✔ bikin isi ke bawah */
+  align-items: center;
+  gap: 20px;
+  text-align: center;      /* ✔ rata tengah teks */
 }
 
 /* Logo + tagline + sosmed */
 .footer-logo {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;   /* ✔ logo di atas, tagline/sosmed di bawah */
+  align-items: center;      /* ✔ semua rata tengah */
 }
+
 
 .footer-logo img {
   height: 50px;
@@ -611,7 +651,7 @@ footer {
 .footer-links ul {
   list-style: none;
   display: flex;
-  gap: 25px;
+  gap: 20px;
   justify-content: center;
   padding: 0;
   margin: 0;
@@ -637,257 +677,159 @@ footer {
   color: #b3d9ff;
 }
 
-/* ========== Responsive Tablet & HP ========== */
 @media (max-width: 768px) {
-  .testimonials .btn {
-    display: block;
+  /* Header & menu */
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: var(--header-height, 75px);
+    left: 0;
     width: 100%;
-    margin: 10px 0;
+    background-color: var(--primary-blue);
+    padding: 20px 0;
     text-align: center;
-    font-size: 16px;
-  }
-    
-  /* Footer */
-  .footer-content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    z-index: 999;
   }
 
-  .footer-logo {
-    align-items: center;
+  .nav-menu.active {
+    display: flex;
   }
 
-  .footer-links ul {
-    flex-direction: column;
-    gap: 12px;
+  .nav-menu li {
+    margin: 1px 0;
   }
 
-  /* Header & Menu */
+  /* Hamburger muncul */
   .mobile-menu {
-    display: block;
-    cursor: pointer;
+    display: flex;
     flex-direction: column;
+    justify-content: space-around;
     width: 30px;
-    height: 21px;
+    height: 24px;
+    cursor: pointer;
   }
 
   .mobile-menu span {
     display: block;
-    width: 25px;
     height: 3px;
-    background-color: #fff; /* putih biar kontras dengan header biru */
-    margin: 5px 0;
-    transition: all 0.3s ease;
-  }
-
-  /* animasi berubah X */
-  .mobile-menu.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-  .mobile-menu.active span:nth-child(2) {
-    opacity: 0;
-  }
-  .mobile-menu.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-  }
-
-  ./* Default: menu sembunyi di HP */
-.nav-menu {
-  display: none; 
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: var(--dark-blue);
-  padding: 20px;
-}
-
-  .nav-menu.active {
-       display: none;
-    cursor: pointer;
-    flex-direction: column;
-    width: 30px;
-    height: 21px;
-}
-
-  .nav-menu li {
-    margin: 15px 0;
-  }
-
-  .nav-menu a {
-    color: #fff; /* teks putih supaya jelas */
-    font-size: 18px;
+    background: #fff;
+    border-radius: 2px;
   }
 
   /* Hero */
   .hero {
-    padding: 60px 0;
+    margin-top: calc(var(--header-height, 75px) + 20px);
+    padding: 80px 20px;
+    text-align: center;
   }
 
-  .hero-content {
-    padding: 0 20px;
+  .hero h1 {
+    font-size: 2rem;
   }
 
-  /* Section Titles */
-  .section-title h2 {
-    font-size: 28px;
+  .hero p {
+    font-size: 1rem;
   }
 
-  /* Layout Grids */
-  .features-grid,
-  .programs-grid {
+  /* Features & Programs tetap 1 kolom */
+  .features,
+  .programs {
     grid-template-columns: 1fr;
   }
 
-  .testimonial-card {
-    min-width: 280px;
+  /* Gallery → 2 kolom */
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
   }
 
+  /* Testimonials → 2 kolom */
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  /* Jadwal kelas → tabel mengecil */
+  .schedule-table {
+    font-size: 0.9rem;
+  }
+
+  .schedule-table th,
+  .schedule-table td {
+    padding: 8px;
+  }
+
+  /* Map */
+  .map-container {
+    height: 250px;
+  }
+
+  /* Contact */
   .contact-info {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+
+@media (max-width: 480px) {
+  /* Header */
+  @media (max-width: 480px) {
+  /* Menu tetap hidden by default, muncul saat active */
+  .nav-menu {
+    display: none;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-menu li {
+    margin: 8px 0;
+  }
+
+  /* Hamburger tetap ada */
+  .mobile-menu {
+    display: flex;
+  }
+}
+
+.logo img {
+    height: 40px;
+  }
+
+  .hero {
+    padding: 80px 15px;
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  /* Gallery 1 kolom */
+  .gallery-grid {
     grid-template-columns: 1fr;
   }
-}
 
-/* ========== Responsive HP Kecil ========== */
-@media (max-width: 480px) {
-  .hero-content h2 {
-    font-size: 28px;
+  /* Testimonials */
+  .testimonial-card {
+    padding: 15px;
   }
 
-  .section-title h2 {
-    font-size: 24px;
+  /* Footer */
+  .footer {
+    font-size: 0.8rem;
+    text-align: center;
   }
-
-  .btn {
-    padding: 10px 25px;
-    font-size: 14px;
-  }
-}
-
-/* Lokasi */
-#lokasi {
-  text-align: center;
-  padding: 20px 20px;
-  background: #f9f9f9;
-}
-#lokasi h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: var(--primary-blue);
-}
-.map-container {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  height: 200px;
-  border-radius: 12px;
-  overflow: hidden;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-.map-container iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-/* Jadwal */
-.schedule-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.schedule-table th,
-.schedule-table td {
-  text-align: center;
-  vertical-align: middle;
-  padding: 12px;
-  border: 1px solid #ddd;
-}
-
-/* Semua section default */
-section {
-  padding: 20px 0;
-}
-.section-title {
-  margin-bottom: 20px;
-}
-
-/* Penyesuaian section */
-#program,
-#jadwal,
-#testimoni,
-#pendaftaran,
-#kontak,
-#lokasi {
-  padding: 20px 0;
-}
-
-/* ========== Gallery Section ========== */
-.gallery {
-  padding: 60px 0;
-  background: #f9f9ff;
-}
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-.gallery-item {
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  text-align: center;
-  transition: transform 0.2s ease;
-}
-.gallery-item:hover {
-  transform: translateY(-5px);
-}
-.gallery-item img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  display: block;
-}
-.gallery-item .caption {
-  padding: 10px;
-  font-size: 14px;
-  color: #444;
-}
-
-/* ========== Testimonials Buttons ========== */
-.testimonials .btn {
-  display: inline-block;
-  margin: 8px 5px;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 8px;
-  background: #5a67d8;
-  color: #fff;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-.testimonials .btn:hover {
-  background: #434190;
-}
-.add-testimonial-btn i,
-.show-all-btn i,
-.show-less-btn i {
-  margin-right: 6px;
-}
-.show-all-btn {
-  background: #38b2ac;
-}
-.show-all-btn:hover {
-  background: #2c7a7b;
-}
-.show-less-btn {
-  background: #ed8936;
-}
-.show-less-btn:hover {
-  background: #c05621;
 }
