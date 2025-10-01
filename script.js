@@ -1,7 +1,7 @@
 // URL Apps Script
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwidZHDzIVRF2uBQ5B2JbYUyr0VQSx83d_Ky37Am0nwQLlC47iJF6VUrTK0wp6h63ZD_w/exec';
 
-// Escape HTML untuk keamanan
+/ Escape HTML untuk keamanan
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -141,7 +141,6 @@ if (regForm) {
 
     const nama = document.getElementById('nama').value.trim();
     const kelas = document.getElementById('kelas').value;
-    const program = document.getElementById('program').value;
     const waktu = document.getElementById('waktu').value;
     const parentName = document.getElementById('parentName').value.trim();
     const phone = document.getElementById('phone').value.trim();
@@ -150,7 +149,6 @@ if (regForm) {
 `Halo Admin GTX EduKids, saya ingin mendaftarkan anak saya:%0A
 👦 Nama Anak: ${nama}%0A
 🏫 Kelas: ${kelas}%0A
-📘 Program: ${program}%0A
 ⏰ Waktu: ${waktu}%0A
 👩‍👦 Nama Orang Tua: ${parentName}%0A
 📱 No. WA: ${phone}`;
