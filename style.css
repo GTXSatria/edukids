@@ -127,11 +127,16 @@ nav {
   margin-top: 120px; /* default desktop */
 }
 
-/* Responsif di HP */
 @media (max-width: 768px) {
-  .hero {
-    margin-top: 140px;  /* header HP lebih tinggi */
-    padding: 100px 20px;
+  .nav-menu {
+    background-color: var(--primary-blue); /* bukan putih lagi */
+  }
+  .nav-menu a {
+    color: #fff;  /* teks putih */
+  }
+  .nav-menu a:hover {
+    background-color: var(--primary-blue);
+    color: #fff;
   }
 }
 
@@ -910,6 +915,7 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
 
