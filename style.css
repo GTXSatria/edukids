@@ -129,14 +129,30 @@ nav {
 
 @media (max-width: 768px) {
   .nav-menu {
-    background-color: var(--primary-blue); /* bukan putih lagi */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    display: none;
+    background-color: var(--dark-blue); /* ganti biru gelap */
   }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
   .nav-menu a {
-    color: #fff;  /* teks putih */
+    color: #fff;                /* teks putih */
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
   }
+
   .nav-menu a:hover {
     background-color: var(--primary-blue);
-    color: #fff;
   }
 }
 
@@ -915,6 +931,7 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
 
