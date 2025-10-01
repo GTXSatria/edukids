@@ -119,24 +119,21 @@ async function loadGallery() {
 }
 
 // ========== Init on Page Load ==========
-window.addEventListener('load', () => {
-  fetchTestimonials(); 
-  loadGallery();
-
-  // ✅ Auto set hero margin sesuai tinggi header
+function updateHeroMargin() {
   const header = document.querySelector("header");
-  const hero = document.querySelector(".hero");
-  if (header && hero) {
-    hero.style.marginTop = header.offsetHeight + "px";
+  if (header) {
+    const headerHeight = header.offsetHeight + "px";
+    document.documentElement.style.setProperty("--header-height", headerHeight);
   }
+}
 
-  // Ikut resize layar
-  window.addEventListener("resize", () => {
-    if (header && hero) {
-      hero.style.marginTop = header.offsetHeight + "px";
-    }
-  });
+window.addEventListener("load", () => {
+  fetchTestimonials();
+  loadGallery();
+  updateHeroMargin();
 });
+
+window.addEventListener("resize", updateHeroMargin);
 
 // =====================================
 // REGISTRATION (langsung ke WhatsApp)
@@ -171,5 +168,6 @@ if (regForm) {
 // ==== Fix biar tombol HTML onclick bisa jalan ====
 window.addNewTestimonial = addNewTestimonial;
 window.fetchTestimonials = fetchTestimonials;
+
 
 
