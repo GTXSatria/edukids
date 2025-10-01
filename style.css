@@ -117,7 +117,7 @@ nav {
 .hero {
   background: 
       linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
-      url('images/halaman2.png');
+      url('/images/halaman2.png');
   background-size: cover;
   background-position: center;
   padding: 120px 0;
@@ -931,6 +931,7 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
 
