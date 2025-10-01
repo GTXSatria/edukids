@@ -1,6 +1,5 @@
 // URL Apps Script
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwidZHDzIVRF2uBQ5B2JbYUyr0VQSx83d_Ky37Am0nwQLlC47iJF6VUrTK0wp6h63ZD_w/exec';
-
 // Escape HTML untuk keamanan
 function escapeHtml(str) {
   return String(str)
@@ -119,21 +118,10 @@ async function loadGallery() {
 }
 
 // ========== Init on Page Load ==========
-function updateHeroMargin() {
-  const header = document.querySelector("header");
-  if (header) {
-    const headerHeight = header.offsetHeight + "px";
-    document.documentElement.style.setProperty("--header-height", headerHeight);
-  }
-}
-
-window.addEventListener("load", () => {
-  fetchTestimonials();
+window.addEventListener('DOMContentLoaded', () => {
+  fetchTestimonials(); 
   loadGallery();
-  updateHeroMargin();
 });
-
-window.addEventListener("resize", updateHeroMargin);
 
 // =====================================
 // REGISTRATION (langsung ke WhatsApp)
@@ -165,9 +153,21 @@ if (regForm) {
   });
 }
 
-// ==== Fix biar tombol HTML onclick bisa jalan ====
-window.addNewTestimonial = addNewTestimonial;
-window.fetchTestimonials = fetchTestimonials;
+  // ==== Fix biar tombol HTML onclick bisa jalan ====
+  window.addNewTestimonial = addNewTestimonial;
+  window.fetchTestimonials = fetchTestimonials;
 
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.querySelector('.nav-menu');
 
+  // klik hamburger
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
 
+  // klik menu item → langsung menuju target & tutup menu
+  document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('active');
+    });
+  });
