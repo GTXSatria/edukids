@@ -130,7 +130,6 @@ nav {
 
 /* Hero Section */
 .hero {
-  margin-top: 75px; /* turun sesuai tinggi header */
   background: 
       linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
       url('images/halaman2.png');
@@ -141,6 +140,10 @@ nav {
   align-items: center;
   position: relative;
 }
+.hero {
+  margin-top: var(--header-height, 75px); /* otomatis ikut header */
+}
+
 .hero-content {
     position: absolute;
     left: 50%;
@@ -917,5 +920,6 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
