@@ -176,7 +176,6 @@ nav {
 /* === RESPONSIVE HERO === */
 @media (max-width: 768px) {
   .hero {
-    margin-top: 110px; /* biar gak ketutup header di HP */
     padding: 100px 20px; /* padding disesuaikan biar konten pas */
   }
 
@@ -920,6 +919,7 @@ section {
 .show-less-btn:hover {
   background: #c05621;
 }
+
 
 
 
