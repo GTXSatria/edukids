@@ -357,6 +357,67 @@ background-color: var(--primary-blue);
 }
 
 /* ========== Gallery Section ========== */
+/* Modal untuk full-screen */
+/* Modal untuk gambar */
+/* Modal untuk gambar */
+/* Modal untuk gambar */
+/* Modal untuk gambar */
+/* Modal untuk gambar */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999; /* Pastikan modal berada di atas semua elemen lain */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Background hitam transparan */
+}
+
+/* Gambar di dalam modal */
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90%; /* Menyesuaikan ukuran gambar */
+  max-height: 80%; /* Membatasi tinggi gambar */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Tombol close */
+.close {
+  position: absolute;
+  top: 40px; /* Jarak dari atas modal */
+  right: 40px; /* Jarak dari kanan modal */
+  color: white;
+  font-size: 50px; /* Memperbesar tombol X */
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10000; /* Pastikan tombol close berada di atas gambar */
+  text-align: center; /* Membuat tombol X dan teks berada di tengah */
+}
+
+/* Menambahkan teks "Close" di bawah tombol X */
+.close-text {
+  display: block;
+  font-size: 14px;
+  margin-top: 5px;
+  color: white;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #573ad4; /* Ganti warna saat hover */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
 .gallery {
   padding: 60px 0;
   background: #f9f9ff;
