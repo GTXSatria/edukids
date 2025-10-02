@@ -86,47 +86,7 @@ function addNewTestimonial() {
   postTestimonial(name.trim(), comment.trim());
 }
 
-// ========== Gallery ==========
-async function loadGallery() {
-  try {
-    const res = await fetch('gallery.json');
-    const data = await res.json();
-    const container = document.getElementById('gallery-grid') || document.querySelector('.gallery-grid');
-    if (!container) return;
-
-    container.innerHTML = '';
-    if (!data.gallery || !data.gallery.length) {
-      container.innerHTML = '<p>Belum ada foto galeri.</p>';
-      return;
-    }
-
-    data.gallery.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'gallery-item';
-      div.innerHTML = `
-        <picture>
-          <source srcset="${item.imageWebp}" type="image/webp">
-          <img src="${item.imageFallback}" alt="${escapeHtml(item.caption)}" loading="lazy">
-        </picture>
-        <p class="caption">${escapeHtml(item.caption)}</p>
-      `;
-      container.appendChild(div);
-    });
-  } catch (err) {
-    console.error('Gagal memuat gallery:', err);
-  }
-}
-
-// ========== Init on Page Load ==========
-window.addEventListener('DOMContentLoaded', () => {
-  fetchTestimonials(); 
-  loadGallery();
-});
-
-// =====================================
-// REGISTRATION (langsung ke WhatsApp)
-// versi baru tanpa field Program
-// =====================================
+// Pendaftaran via WhatsApp
 const regForm = document.getElementById('registrationForm');
 if (regForm) {
   regForm.addEventListener('submit', e => {
@@ -153,21 +113,81 @@ if (regForm) {
   });
 }
 
-  // ==== Fix biar tombol HTML onclick bisa jalan ====
-  window.addNewTestimonial = addNewTestimonial;
-  window.fetchTestimonials = fetchTestimonials;
+// ==== Fix biar tombol HTML onclick bisa jalan ====
+window.addNewTestimonial = addNewTestimonial;
+window.fetchTestimonials = fetchTestimonials;
 
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.querySelector('.nav-menu');
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.querySelector('.nav-menu');
 
-  // klik hamburger
-  hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
+// klik hamburger
+hamburger.addEventListener('click', () => {
+  navMenu.classList.toggle('active');
+});
+
+// klik menu item → langsung menuju target & tutup menu
+document.querySelectorAll('.nav-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    navMenu.classList.remove('active');
   });
+});
 
-  // klik menu item → langsung menuju target & tutup menu
-  document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-      navMenu.classList.remove('active');
+// Memuat galeri dari file JSON
+async function loadGallery() {
+  try {
+    const res = await fetch('gallery.json');
+    const data = await res.json();
+    const container = document.getElementById('gallery-grid');
+    if (!container) return;
+
+    container.innerHTML = '';
+    if (!data.gallery || !data.gallery.length) {
+      container.innerHTML = '<p>Belum ada foto galeri.</p>';
+      return;
+    }
+
+    data.gallery.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'gallery-item';
+      div.innerHTML = `
+        <picture>
+          <source srcset="${item.imageWebp}" type="image/webp">
+          <img src="${item.imageFallback}" alt="${item.caption}">
+        </picture>
+        <p class="caption">${item.caption}</p>
+      `;
+      
+      // Menambahkan event listener untuk modal
+      const image = div.querySelector('img');
+      image.addEventListener('click', () => openModal(image.src));
+
+      container.appendChild(div);
     });
-  });
+  } catch (err) {
+    console.error('Gagal memuat gallery:', err);
+  }
+}
+
+// Fungsi untuk membuka modal dengan gambar
+function openModal(imageSrc) {
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  
+  console.log("Membuka modal dengan gambar: ", imageSrc); // Tambahkan log untuk memeriksa gambar yang dimuat
+
+  modal.style.display = 'block';
+  modalImage.src = imageSrc;  // Menampilkan gambar di dalam modal
+  modalImage.setAttribute('title', "Gambar galeri");  // Mengatur title untuk gambar modal
+}
+
+// Fungsi untuk menutup modal
+function closeModal() {
+  const modal = document.getElementById('imageModal');
+  modal.style.display = 'none';
+}
+
+// Menunggu halaman dimuat
+window.addEventListener('DOMContentLoaded', () => {
+  fetchTestimonials(); 
+  loadGallery();
+});
