@@ -896,9 +896,10 @@ footer {
 }
 
 a {
-  color: white;  /* Memberi warna link */
+  color: green;  /* Memberi warna link */
   text-decoration: underline;  /* Membuat link terlihat bergaris bawah */
   cursor: pointer;  /* Menambahkan kursor tangan saat hover */
 }
+
 
 
