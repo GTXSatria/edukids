@@ -894,3 +894,10 @@ footer {
     text-align: center;
   }
 }
+
+a {
+  color: blue;  /* Memberi warna link */
+  text-decoration: underline;  /* Membuat link terlihat bergaris bawah */
+  cursor: pointer;  /* Menambahkan kursor tangan saat hover */
+}
+
