@@ -2,32 +2,32 @@
   "gallery": [
     {
       "id": 1,
-      "imageWebp": "images/hasil-belajar/piagam1.webp",
-      "imageFallback": "images/hasil-belajar/piagam1.jpg",
+      "imageWebp": "https://raw.githubusercontent.com/GTXSatria/edukids/main/images/hasil-belajar/piagam1.webp",
+      "imageFallback": "https://raw.githubusercontent.com/GTXSatria/edukids/main/images/hasil-belajar/piagam1.jpg",
       "caption": "Hasil Belajar - Piagam"
     },
     {
       "id": 2,
-      "imageWebp": "images/interaksi/interaksi1.webp",
-      "imageFallback": "images/interaksi/interaksi1.jpg",
+      "imageWebp": "https://raw.githubusercontent.com/GTXSatria/edukids/main/images/interaksi/interaksi1.webp",
+      "imageFallback": "https://raw.githubusercontent.com/GTXSatria/edukids/main/images/interaksi/interaksi1.jpg",
       "caption": "Interaksi Anak-anak"
     },
     {
       "id": 3,
-      "imageWebp": "images/kegiatan-belajar/kegiatan1.webp",
-      "imageFallback": "images/kegiatan-belajar/kegiatan1.jpg",
+      "imageWebp": "https://raw.githubusercontent.com/GTXSatria/edukids/main/images/kegiatan-belajar/kegiatan1.webp",
+      "imageFallback": "https://raw.githubusercontent.com/GTXSatria/edukids/main/images/kegiatan-belajar/kegiatan1.jpg",
       "caption": "Kegiatan Belajar"
     },
     {
       "id": 4,
-      "imageWebp": "images/kreatif/kreatif1.webp",
-      "imageFallback": "images/kreatif/kreatif1.jpg",
+      "imageWebp": "https://raw.githubusercontent.com/GTXSatria/edukids/main/images/kreatif/kreatif1.webp",
+      "imageFallback": "https://raw.githubusercontent.com/GTXSatria/edukids/main/images/kreatif/kreatif1.jpg",
       "caption": "Aktivitas Kreatif"
     },
     {
       "id": 5,
-      "imageWebp": "images/outdoor/outdoor1.webp",
-      "imageFallback": "images/outdoor/outdoor1.jpg",
+      "imageWebp": "https://raw.githubusercontent.com/GTXSatria/edukids/main/images/outdoor/outdoor1.webp",
+      "imageFallback": "https://raw.githubusercontent.com/GTXSatria/edukids/main/images/outdoor/outdoor1.jpg",
       "caption": "Kegiatan Outdoor"
     }
   ]
